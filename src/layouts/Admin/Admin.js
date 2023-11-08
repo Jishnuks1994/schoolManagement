@@ -24,13 +24,15 @@ import PerfectScrollbar from "perfect-scrollbar";
 import AdminNavbar from "components/Navbars/AdminNavbar.js";
 import Footer from "components/Footer/Footer.js";
 import Sidebar from "components/Sidebar/Sidebar.js";
-import FixedPlugin from "components/FixedPlugin/FixedPlugin.js";
+// import FixedPlugin from "components/FixedPlugin/FixedPlugin.js";
 
 import routes from "routes.js";
 
 
 import { BackgroundColorContext } from "contexts/BackgroundColorContext";
 import Png from "views/Png";
+import ProgressCardForAdmin from "views/ProgressCard";
+import Payslip from "views/Payslip";
 
 var ps;
 
@@ -113,11 +115,20 @@ function Admin(props) {
                 toggleSidebar={toggleSidebar}
                 sidebarOpened={sidebarOpened}
               />
+              
               <Routes>
                 {getRoutes(routes)}
                 <Route
                   path="/"
                   element={<Navigate to="/admin/dashboard" replace />}
+                />
+                 <Route
+                  path="/admin/progress-card"
+                  element={<ProgressCardForAdmin></ProgressCardForAdmin>}
+                />
+                <Route
+                  path="/admin/teachers/payslip"
+                  element={<Payslip></Payslip>}
                 />
                  <Route
                  path="*"
@@ -133,7 +144,7 @@ function Admin(props) {
               }
             </div>
           </div>
-          <FixedPlugin bgColor={color} handleBgClick={changeColor} />
+          {/* <FixedPlugin bgColor={color} handleBgClick={changeColor} /> */}
         </React.Fragment>
       )}
     </BackgroundColorContext.Consumer>

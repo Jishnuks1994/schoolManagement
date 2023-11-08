@@ -3,7 +3,7 @@ import { Route, Routes, Navigate, useLocation } from "react-router-dom";
 
 // Import necessary components for the Teacher layout
 
-import FixedPlugin from "components/FixedPlugin/FixedPlugin";
+// import FixedPlugin from "components/FixedPlugin/FixedPlugin";
 
 import routes from "routes.js";
 
@@ -15,6 +15,7 @@ import Png from "views/Png";
 import { Col, Row } from "react-bootstrap";
 import StudentDetails from "views/teachers/StudentDetails";
 import ProgressCard from "views/teachers/ProgressCard";
+import StudentsAttendance from "views/teachers/StudentsAttendance";
 
 
 var ps;
@@ -83,6 +84,10 @@ function Teacher(props) {
                     element={<ProgressCard></ProgressCard>}
                     ></Route> 
                     <Route
+                    path="/students-attendance"
+                    element={<StudentsAttendance></StudentsAttendance>}
+                    ></Route> 
+                    <Route
                 path="*"
                 element={<Png></Png>}
               />
@@ -93,7 +98,7 @@ function Teacher(props) {
               }
             </div>
          
-          <FixedPlugin bgColor={color} handleBgClick={changeColor} />
+          {/* <FixedPlugin bgColor={color} handleBgClick={changeColor} /> */}
         </React.Fragment>
       )}
     </BackgroundColorContext.Consumer>

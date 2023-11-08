@@ -19,31 +19,25 @@
 import React from "react";
 
 // reactstrap components
-import { Container, Nav, NavItem, NavLink } from "reactstrap";
+import { Container } from "reactstrap";
 
 function Footer() {
   return (
     <footer className="footer">
       <Container fluid >
-        <Nav>
-          
-          <NavItem className="text-center" >
-            <NavLink href="*" className="me-3">
-              About Us
-            </NavLink>
-          </NavItem>
-          
-        </Nav>
-        <div className="copyright">
-          © {new Date().getFullYear()} made with{" "}
-          <i className="tim-icons icon-heart-2" /> by{" "}
-          <a
-            href="https://ictglobaltech.com/"
-            target="_blank"
-          >
-            ICT Global Tech
-          </a>{" "}
-          for a better web.
+        
+        <div className=" text-center">
+         <div>
+            © {new Date().getFullYear()} made with{" "}
+            <i className="tim-icons icon-heart-2" /> by{" "}
+            <a style={{color:'blue'}}
+              href="https://ictglobaltech.com/"
+              target="_blank"
+            >
+              ICT Global Tech
+            </a>{" "}
+            for a better web.
+         </div>
         </div>
       </Container>
     </footer>

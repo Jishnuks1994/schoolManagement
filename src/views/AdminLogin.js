@@ -1,4 +1,4 @@
-import FixedPlugin from 'components/FixedPlugin/FixedPlugin';
+// import FixedPlugin from 'components/FixedPlugin/FixedPlugin';
 import Footer from 'components/Footer/Footer'
 import AdminNavbar from 'components/Navbars/AdminNavbar'
 import React, { useState } from 'react'
@@ -30,7 +30,7 @@ function AdminLogin() {
     };
     return (
         <div>
-            <FixedPlugin></FixedPlugin>
+            {/* <FixedPlugin></FixedPlugin> */}
             <div className='row'><AdminNavbar></AdminNavbar></div>
             <div className='mt-5'>
                 

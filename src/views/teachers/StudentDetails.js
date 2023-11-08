@@ -16,15 +16,19 @@ function StudentDetails() {
 
     const whatsappLink = `https://wa.me/${1234567890}`;
 
-    const progressCard=()=>[
-        navigate('/teachers/progress-card')
-    ]
+    const progressCard=()=>{
+        navigate('/teacher/progress-card')
+    }
+
+    const attendance=()=>{
+        navigate('/teacher/students-attendance')
+    }
     return (
         <div>
 
             <Container >
 <div className='mb-2 text-right'>
-    <Button>Take Attendance</Button>
+    <Button onClick={attendance}>Take Attendance</Button>
 </div>
                 <Table striped bordered hover>
                     <thead>
@@ -56,21 +60,25 @@ function StudentDetails() {
                 <Modal show={show} onHide={handleClose}>
         <Modal.Header>
           <Modal.Title><b>Student Name</b>
+         
           </Modal.Title>
+          
         </Modal.Header>
         <Modal.Body>
 
         <div className='text-center'>
-        <img src="../assets/img/anime3.png" alt="profile_pic" />
+        <img src="https://i.postimg.cc/wv8r88nd/female-student-graduation-avatar-profile-vector-12055265.jpg" style={{borderRadius:'50%',height:'100px',width:'100px'}} alt="profile_pic" />
 
         </div>
-        <div>
+        <hr />
+        <div className='mx-5'>
             <p><b>Address:</b></p>
             <p><b>Mobile No: </b> <Link to={whatsappLink} target="_blank"> 1234567890</Link></p>
             <p><b>Blood Type:</b></p>
             <p><b>Address:</b></p>
 
         </div>
+        <hr />
             
         </Modal.Body>
         <Modal.Footer className='px-3 mb-3'>

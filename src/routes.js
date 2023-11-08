@@ -17,10 +17,13 @@
 */
 
 import Dashboard from "views/Dashboard.js";
+import Payslip from "views/Payslip";
+import ProgressCardForAdmin from "views/ProgressCard";
 import Students from "views/Students";
 import Teachers from "views/Teachers";
 import ProgressCard from "views/teachers/ProgressCard";
 import StudentDetails from "views/teachers/StudentDetails";
+import StudentsAttendance from "views/teachers/StudentsAttendance";
 import Teacher_Dashboard from "views/teachers/Teacher_Dashboard";
 
 
@@ -51,6 +54,22 @@ var routes = [
     layout: "/admin",
   },
   {
+    path: "/progress-card",
+    name: "Progress Card",
+   
+    icon: "tim-icons icon-single-02",
+    component: <ProgressCardForAdmin />,
+    layout: "/admin",
+  },
+  {
+    path: "/teachers/payslip",
+    name: "Pay Slip",
+   
+    icon: "tim-icons icon-single-02",
+    component: <Payslip/>,
+    layout: "/admin",
+  },
+  {
     path: "/dashboard",
     name: "Teachers",
    
@@ -60,18 +79,23 @@ var routes = [
   },
   {
     path: "/student-details",
-    name: "Teachers",
+    name: "Student Details",
    
-    icon: "tim-icons icon-single-02",
     component: <StudentDetails />,
     layout: "/teacher",
   },
   {
     path: "/progress-card",
-    name: "Teachers",
+    name: "Progress Card",
    
-    icon: "tim-icons icon-single-02",
     component: <ProgressCard />,
+    layout: "/teacher",
+  },
+  {
+    path: "/students-attendance",
+    name: "Attendance",
+   
+    component: <StudentsAttendance />,
     layout: "/teacher",
   },
 

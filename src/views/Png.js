@@ -1,4 +1,4 @@
-import FixedPlugin from 'components/FixedPlugin/FixedPlugin'
+// import FixedPlugin from 'components/FixedPlugin/FixedPlugin'
 import AdminNavbar from 'components/Navbars/AdminNavbar'
 import React from 'react'
 import { Row } from 'reactstrap'
@@ -7,7 +7,7 @@ import { Row } from 'reactstrap'
 function Png() {
   return (
     <div>
-        <FixedPlugin></FixedPlugin>
+        {/* <FixedPlugin></FixedPlugin> */}
         <Row><AdminNavbar></AdminNavbar></Row>
 
         

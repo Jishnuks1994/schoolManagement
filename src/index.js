@@ -19,7 +19,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
 
-import AdminLayout from "layouts/Admin/Admin.js";
+
 
 import "assets/scss/black-dashboard-react.scss";
 import "assets/demo/demo.css";
@@ -28,6 +28,7 @@ import "@fortawesome/fontawesome-free/css/all.min.css";
 
 import ThemeContextWrapper from "./components/ThemeWrapper/ThemeWrapper";
 import BackgroundColorWrapper from "./components/BackgroundColorWrapper/BackgroundColorWrapper";
+import AdminLayout from "layouts/Admin/Admin.js";
 import AdminLogin from "views/AdminLogin";
 import Png from "views/Png";
 import Teacher from "layouts/Teachers";
@@ -36,10 +37,10 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 
 root.render(
   <ThemeContextWrapper>
-    <BackgroundColorWrapper>
+    {/* <BackgroundColorWrapper> */}
       <BrowserRouter>
         <Routes>
-          <Route path="" element={<AdminLogin />} />
+          <Route path="/" element={<AdminLogin />} />
           <Route path="/admin/*" element={<AdminLayout />} />
           <Route path="/teacher/*" element={<Teacher />} />
           <Route
@@ -48,6 +49,6 @@ root.render(
           />
         </Routes>
       </BrowserRouter>
-    </BackgroundColorWrapper>
+    {/* </BackgroundColorWrapper> */}
   </ThemeContextWrapper>
 );
