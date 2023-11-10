@@ -1,45 +1,76 @@
-// import FixedPlugin from 'components/FixedPlugin/FixedPlugin';
-import Footer from 'components/Footer/Footer'
-import AdminNavbar from 'components/Navbars/AdminNavbar'
-import React, { useState } from 'react'
-
-
-
-import { Form, Button, Container } from 'react-bootstrap'; // Assuming you have React-Bootstrap imported
-import { Link, useNavigate } from 'react-router-dom';
+import React, { useState } from 'react';
+import { Form, Button, Container } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
+import { loginApi } from 'services/allApi';
+import validator from "validator";
 
 function AdminLogin() {
-    const navigate=useNavigate()
+    const navigate = useNavigate();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [userType, setUserType] = useState('admin'); // Default user type is admin
+    const [errors, setErrors] = useState({});
 
-    const handleLogin = () => {
-        // Handle login based on selected user type, email, and password
-        console.log(`Logging in as ${userType} with Email: ${email} and Password: ${password}`);
-        // You might perform further actions based on the selected user type and credentials
-            // navigate="/"+{userType}
-            if (userType === 'admin') {
-                navigate('/admin'); // Navigating to the '/admin' route for admin login
-            } else if (userType === 'teacher') {
-                navigate('/teacher'); // Navigating to the '/teacher' route for teacher login
-            } else if (userType === 'student') {
-                navigate('/student'); // Navigating to the '/student' route for student login
-            }
-        
+    const validateForm = () => {
+        let errors = {};
+        let isValid = true;
+
+        if (!email) {
+            errors.email = 'Email is required';
+            isValid = false;
+        }
+        if (!validator.isEmail(email)) {
+            errors.email = 'Invalid Email';
+            isValid = false;
+        }
+
+        if (!password) {
+            errors.password = 'Password is required';
+            isValid = false;
+        }
+
+        setErrors(errors);
+        return isValid;
     };
+
+    const handleLogin = async () => {
+        if (validateForm()) {
+            // Handle login based on selected user type, email, and password
+            // console.log(`Logging in as ${userType} with Email: ${email} and Password: ${password}`);
+
+            if (userType === 'admin') {
+                const body = { email, password }
+                const result = await loginApi(body)
+                if (result.status >= 200 && result.status < 300) {
+                    // console.log(result.data.name);
+                    localStorage.setItem('name',result.data.name)
+                    navigate('/admin');
+                    
+                }
+                else {
+                    alert(result.response.data)
+                }
+
+
+            }
+            else if (userType === 'teacher') {
+                navigate('/teacher');
+            }
+            else if (userType === 'student') {
+                navigate('/student');
+            }
+        }
+    };
+
     return (
         <div>
-            {/* <FixedPlugin></FixedPlugin> */}
-            <div className='row'><AdminNavbar></AdminNavbar></div>
             <div className='mt-5'>
-                
                 <Container className="login-container col-lg-4 col-md-6">
                     <h2 className='text-center'>Login</h2>
                     <Form>
                         <Form.Group controlId="userType">
                             <Form.Label>Select User Type</Form.Label>
-                            <Form.Control style={{fontSize:'16px'}} as="select" value={userType} onChange={(e) => setUserType(e.target.value)}>
+                            <Form.Control style={{ fontSize: '16px' }} as="select" value={userType} onChange={(e) => setUserType(e.target.value)}>
                                 <option value="admin">Admin</option>
                                 <option value="teacher">Teacher</option>
                                 <option value="student">Student</option>
@@ -54,6 +85,7 @@ function AdminLogin() {
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
                             />
+                            {errors.email && <small className="text-danger">{errors.email}</small>}
                         </Form.Group>
 
                         <Form.Group className='mt-1' controlId="password">
@@ -64,19 +96,19 @@ function AdminLogin() {
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
                             />
+                            {errors.password && <small className="text-danger">{errors.password}</small>}
                         </Form.Group>
 
                         <div className='text-center'>
-                            <Button  className='mt-5 w-75' variant="primary" onClick={handleLogin}>
+                            <Button className='mt-5 w-75' variant="primary" onClick={handleLogin}>
                                 Login
                             </Button>
                         </div>
                     </Form>
                 </Container>
             </div>
-            <Footer></Footer>
         </div>
-    )
+    );
 }
 
-export default AdminLogin
+export default AdminLogin;

@@ -41,6 +41,7 @@ root.render(
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<AdminLogin />} />
+          <Route path="/black-dashboard-react" element={<Navigate to="/" replace />} />
           <Route path="/admin/*" element={<AdminLayout />} />
           <Route path="/teacher/*" element={<Teacher />} />
           <Route

@@ -16,12 +16,15 @@
 
 */
 
+import AdminViewAll_progressCard from "views/AdminViewAll_progressCard";
 import Dashboard from "views/Dashboard.js";
 import Payslip from "views/Payslip";
 import ProgressCardForAdmin from "views/ProgressCard";
 import Students from "views/Students";
+import TeacherAttendance from "views/TeacherAttendance";
 import Teachers from "views/Teachers";
 import ProgressCard from "views/teachers/ProgressCard";
+import ProgressCardAll from "views/teachers/ProgressCardAll";
 import StudentDetails from "views/teachers/StudentDetails";
 import StudentsAttendance from "views/teachers/StudentsAttendance";
 import Teacher_Dashboard from "views/teachers/Teacher_Dashboard";
@@ -70,6 +73,22 @@ var routes = [
     layout: "/admin",
   },
   {
+    path: "/teachers/attendance",
+    name: "Teacher Attendance",
+   
+    icon: "tim-icons icon-single-02",
+    component: <TeacherAttendance/>,
+    layout: "/admin",
+  },
+  {
+    path: "/students/progress-card-all",
+    name: "Teacher Attendance",
+   
+    icon: "tim-icons icon-single-02",
+    component: <AdminViewAll_progressCard/>,
+    layout: "/admin",
+  },
+  {
     path: "/dashboard",
     name: "Teachers",
    
@@ -96,6 +115,12 @@ var routes = [
     name: "Attendance",
    
     component: <StudentsAttendance />,
+    layout: "/teacher",
+  },
+  {
+    path: "/progress-card-all",
+    name: "Progress Card",
+    component: <ProgressCardAll />,
     layout: "/teacher",
   },
 

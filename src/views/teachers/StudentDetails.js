@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, Container, Form } from 'react-bootstrap';
+import { Button, Col, Container, Form, Row } from 'react-bootstrap';
 import Table from 'react-bootstrap/Table';
 
 import { useState } from 'react';
@@ -12,24 +12,39 @@ function StudentDetails() {
     const [show, setShow] = useState(false);
     const handleShow = () => setShow(true);
     const handleClose = () => setShow(false);
-    const navigate=useNavigate()
+    const navigate = useNavigate()
 
     const whatsappLink = `https://wa.me/${1234567890}`;
 
-    const progressCard=()=>{
+    const progressCard = () => {
         navigate('/teacher/progress-card')
     }
 
-    const attendance=()=>{
+    const attendance = () => {
         navigate('/teacher/students-attendance')
+    }
+    const progressCardAll=()=>{
+        navigate('/teacher/progress-card-all')
     }
     return (
         <div>
 
             <Container >
-<div className='mb-2 text-right'>
-    <Button onClick={attendance}>Take Attendance</Button>
-</div>
+                <Row>
+                    <Col className='mb-3 mt-5'>
+                        <Button style={{ background: 'green' }} onClick={attendance}>Take Attendance</Button>
+    
+    
+                    </Col>
+
+                    <Col className='mb-3 mt-5'>
+                    <h3>Statastics of Attendance</h3>
+                    </Col>
+    
+                    <Col className='mb-3 mt-5 text-right'>
+                        <Button style={{ background: 'orange' }} onClick={progressCardAll}>View Progress Card</Button>
+                    </Col>
+                </Row>
                 <Table striped bordered hover>
                     <thead>
                         <tr>
@@ -56,40 +71,40 @@ function StudentDetails() {
 
                     </tbody>
                 </Table>
-  {/* modal form for view student details */}
+                {/* modal form for view student details */}
                 <Modal show={show} onHide={handleClose}>
-        <Modal.Header>
-          <Modal.Title><b>Student Name</b>
-         
-          </Modal.Title>
-          
-        </Modal.Header>
-        <Modal.Body>
+                    <Modal.Header>
+                        <Modal.Title><b>Student Name</b>
 
-        <div className='text-center'>
-        <img src="https://i.postimg.cc/wv8r88nd/female-student-graduation-avatar-profile-vector-12055265.jpg" style={{borderRadius:'50%',height:'100px',width:'100px'}} alt="profile_pic" />
+                        </Modal.Title>
 
-        </div>
-        <hr />
-        <div className='mx-5'>
-            <p><b>Address:</b></p>
-            <p><b>Mobile No: </b> <Link to={whatsappLink} target="_blank"> 1234567890</Link></p>
-            <p><b>Blood Type:</b></p>
-            <p><b>Address:</b></p>
+                    </Modal.Header>
+                    <Modal.Body>
 
-        </div>
-        <hr />
-            
-        </Modal.Body>
-        <Modal.Footer className='px-3 mb-3'>
-          <Button variant="danger" onClick={handleClose}>
-            Close
-          </Button>
-          <Button variant="primary" onClick={handleClose}>
-            Save Changes
-          </Button>
-        </Modal.Footer>
-      </Modal>
+                        <div className='text-center'>
+                            <img src="https://i.postimg.cc/wv8r88nd/female-student-graduation-avatar-profile-vector-12055265.jpg" style={{ borderRadius: '50%', height: '100px', width: '100px' }} alt="profile_pic" />
+
+                        </div>
+                        <hr />
+                        <div className='mx-5'>
+                            <p><b>Address:</b></p>
+                            <p><b>Mobile No: </b> <Link to={whatsappLink} target="_blank"> 1234567890</Link></p>
+                            <p><b>Blood Type:</b></p>
+                            <p><b>Address:</b></p>
+
+                        </div>
+                        <hr />
+
+                    </Modal.Body>
+                    <Modal.Footer className='px-3 mb-3'>
+                        <Button variant="danger" onClick={handleClose}>
+                            Close
+                        </Button>
+                        <Button variant="primary" onClick={handleClose}>
+                            Save Changes
+                        </Button>
+                    </Modal.Footer>
+                </Modal>
             </Container>
         </div>
     )

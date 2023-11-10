@@ -16,6 +16,7 @@ import { Col, Row } from "react-bootstrap";
 import StudentDetails from "views/teachers/StudentDetails";
 import ProgressCard from "views/teachers/ProgressCard";
 import StudentsAttendance from "views/teachers/StudentsAttendance";
+import ProgressCardAll from "views/teachers/ProgressCardAll";
 
 
 var ps;
@@ -82,6 +83,10 @@ function Teacher(props) {
                     <Route
                     path="/progress-card"
                     element={<ProgressCard></ProgressCard>}
+                    ></Route> 
+                    <Route
+                    path="/progress-card-all"
+                    element={<ProgressCardAll></ProgressCardAll>}
                     ></Route> 
                     <Route
                     path="/students-attendance"

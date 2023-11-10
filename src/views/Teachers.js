@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import { Button } from 'react-bootstrap'
+import React, { useEffect, useState } from 'react'
+import { Button, Col, Row } from 'react-bootstrap'
 import { Card, CardBody, CardHeader, CardTitle, Table } from 'reactstrap'
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
@@ -25,11 +25,50 @@ function Teachers(props) {
     const payslip=()=>{
       navigate('/admin/teachers/payslip')
     }
+    const attendance=()=>{
+      navigate('/admin/teachers/attendance')
+    }
 
+    //teacher add form validation
+    const [addTeacher,setAddTeacher]=useState({
+      name:"",
+      email:"",
+      password:"",
+      mobile:"",
+      gender:"",
+      subject:"",
+      salary:"",
+    })
+
+    const [addImage,setAddImage]=useState("")
+
+    const insertImage=(e)=>{
+      // console.log(e.target);
+      setAddImage(e.target.files[0])
+
+    }
+
+  // state to hold imahe preview url
+  const [imagePreview, setImagePreview] = useState("")
+
+  useEffect(() => {
+
+    if (addImage) {
+        // console.log(URL.createObjectURL(image));
+        setImagePreview(URL.createObjectURL(addImage))
+    }
+
+
+}, [addImage])
   return (
     <div className="content">
 
-    <div className='mb-4 text-right'><Button color='primay' onClick={handleShow}>Add New Staff</Button></div>
+ <Row className='mt-3'>
+ <Col className='mb-4'><Button style={{background:'green'}} onClick={attendance}>Add Attendance</Button></Col>
+
+      <Col className='mb-4 text-right'><Button color='primay' onClick={handleShow}>Add New Staff</Button></Col>
+     
+ </Row>
                     <Card >
               <CardHeader>
                 <CardTitle tag="h4">Teachers Details</CardTitle>
@@ -73,48 +112,80 @@ function Teachers(props) {
         </Modal.Header>
         <Modal.Body>
         <div className='text-center'>
-        <img src="https://i.postimg.cc/wv8r88nd/female-student-graduation-avatar-profile-vector-12055265.jpg" style={{borderRadius:'50%',height:'100px',width:'100px'}} alt="profile_pic" />
+         <img src={imagePreview?imagePreview : "https://i.postimg.cc/wv8r88nd/female-student-graduation-avatar-profile-vector-12055265.jpg" }style={{borderRadius:'50%',height:'100px',width:'100px'}} alt="profile_pic" />
 
         </div>
           <Form>
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
               <Form.Label>Name</Form.Label>
               <Form.Control
+                name="name"
                 type="text"
                 placeholder="Enter Name"
                 autoFocus
+                required
               />
             </Form.Group>
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
               <Form.Label>Mobile</Form.Label>
               <Form.Control
+              name="mobile"
                 type="text"
                 placeholder="Enter Number"
                 autoFocus
+                pattern="[0-9]{10}" required=""
               />
             </Form.Group>
             
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
               <Form.Label>Subject</Form.Label>
               <Form.Control
+              name="subject"
                 type="text"
                 placeholder="Enter Subject"
                 autoFocus
+                required
               />
             </Form.Group>
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
               <Form.Label>Salary</Form.Label>
               <Form.Control
+              name="salary"
                 type="text"
                 placeholder="Enter Salary"
                 autoFocus
+                required
               />
             </Form.Group>
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
               <Form.Label>Add Image</Form.Label>
               <Form.Control
+              onChange={(e) => insertImage(e)}
                 type="file"
                 autoFocus
+                required
+              />
+            </Form.Group>
+            <hr />
+            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+              <Form.Label>Email</Form.Label>
+              <Form.Control
+              name="email"
+                type="email"
+                placeholder="Enter Email"
+                autoFocus
+                required
+              />
+            </Form.Group>
+
+            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+              <Form.Label>Password</Form.Label>
+              <Form.Control
+              name="email"
+                type="text"
+                placeholder="Enter Password"
+                autoFocus
+                required
               />
             </Form.Group>
             

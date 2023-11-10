@@ -33,6 +33,8 @@ import { BackgroundColorContext } from "contexts/BackgroundColorContext";
 import Png from "views/Png";
 import ProgressCardForAdmin from "views/ProgressCard";
 import Payslip from "views/Payslip";
+import TeacherAttendance from "views/TeacherAttendance";
+import AdminViewAll_progressCard from "views/AdminViewAll_progressCard";
 
 var ps;
 
@@ -127,8 +129,16 @@ function Admin(props) {
                   element={<ProgressCardForAdmin></ProgressCardForAdmin>}
                 />
                 <Route
+                  path="/admin/students/progress-card-all"
+                  element={<AdminViewAll_progressCard></AdminViewAll_progressCard>}
+                />
+                <Route
                   path="/admin/teachers/payslip"
                   element={<Payslip></Payslip>}
+                />
+                <Route
+                  path="/admin/teachers/attendance"
+                  element={<TeacherAttendance></TeacherAttendance>}
                 />
                  <Route
                  path="*"
