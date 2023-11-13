@@ -65,7 +65,7 @@ var routes = [
     layout: "/admin",
   },
   {
-    path: "/teachers/payslip",
+    path: "/teachers/payslip/:id",
     name: "Pay Slip",
    
     icon: "tim-icons icon-single-02",
