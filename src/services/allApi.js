@@ -17,3 +17,13 @@ export const teacherAddApi = async (body, header) => {
 export const getAllTeachersApi = async () => {
     return await commonStructure('GET', `${BASE_URL}/admin/get-all-teachers`, {})
 }
+
+//show teacher
+export const showTeacherApi = async (id) => {
+    return await commonStructure('GET', `${BASE_URL}/admin/show-teacher/${id}`, {})
+}
+
+//edit teacher
+export const editTeacherApi = async (body) => {
+    return await commonStructure('PATCH', `${BASE_URL}/admin/edit-teacher`, body)
+}

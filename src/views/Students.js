@@ -343,7 +343,7 @@ function Students() {
       setEditInputs({ ...editInputs, [name]: value })
     }
 
-    console.log(editInputs);
+    // console.log(editInputs);
 
   }
 

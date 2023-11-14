@@ -18,6 +18,7 @@
 
 import AdminViewAll_progressCard from "views/AdminViewAll_progressCard";
 import Dashboard from "views/Dashboard.js";
+import EditTeacher from "views/EditTeacher";
 import Payslip from "views/Payslip";
 import ProgressCardForAdmin from "views/ProgressCard";
 import Students from "views/Students";
@@ -70,6 +71,14 @@ var routes = [
    
     icon: "tim-icons icon-single-02",
     component: <Payslip/>,
+    layout: "/admin",
+  },
+  {
+    path: "/teachers/edit/:id",
+    name: "Pay Slip",
+   
+    icon: "tim-icons icon-single-02",
+    component: <EditTeacher/>,
     layout: "/admin",
   },
   {

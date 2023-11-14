@@ -6,6 +6,8 @@ import Modal from 'react-bootstrap/Modal';
 import { Link, useNavigate } from 'react-router-dom';
 import { teacherAddApi } from 'services/allApi';
 import { getAllTeachersApi } from 'services/allApi';
+import { showTeacherApi } from 'services/allApi';
+import BASE_URL from 'services/baseUrl';
 
 
 function Teachers(props) {
@@ -25,14 +27,26 @@ function Teachers(props) {
 
 
 
-  
+
   const attendance = () => {
     navigate('/admin/teachers/attendance')
   }
 
-  const editTeacher=(id)=>{
+  //state to add individual teacher data
+  const [teacher, setTeacher] = useState({})
+
+  const showTeacher = async (id) => {
+
+    // console.log(id);
+    const result = await showTeacherApi(id)
+    // console.log(id);
+    // console.log(result.data);
+    setTeacher(result.data)
+    // console.log(result.data);
+    setEditImagePreview(`${BASE_URL}/uploads/${result.data.image}`)
+    // console.log(editImagePreview);
     handleEditShow()
-    
+
   }
 
   //----------------------------------------------------------------------------------------------------
@@ -40,7 +54,7 @@ function Teachers(props) {
   const [addImage, setAddImage] = useState("")
 
   const insertImage = (e) => {
-    console.log(e.target.files[0]);
+    // console.log(e.target.files[0]);
     setAddImage(e.target.files[0])
 
   }
@@ -156,7 +170,7 @@ function Teachers(props) {
     data.append("password", password)
     data.append("image", addImage)
 
-    console.log(user_name, gender, salary, email, password, mobile, addImage, subject);
+    // console.log(user_name, gender, salary, email, password, mobile, addImage, subject);
     //api
     const result = await teacherAddApi(data, headerConfig)
 
@@ -191,6 +205,7 @@ function Teachers(props) {
 
   const insertEditImage = (e) => {
     // console.log(e.target);
+    
     setEditImage(e.target.files[0])
 
 
@@ -320,6 +335,7 @@ function Teachers(props) {
     const result = await getAllTeachersApi()
     if (result.status >= 200 && result.status < 300) {
       setAllTeachers(result.data)
+      
     }
 
   }
@@ -336,7 +352,7 @@ function Teachers(props) {
       // console.log(URL.createObjectURL(image));
       setEditImagePreview(URL.createObjectURL(editImage))
     }
-
+    
     //get all teachers
     getAllTeachers()
 
@@ -360,6 +376,7 @@ function Teachers(props) {
             <Table className="tablesorter" responsive>
               <thead className="text-primary">
                 <tr>
+                  <th>Number</th>
                   <th>Name</th>
                   <th>Subject</th>
                   <th> Mobile No </th>
@@ -370,13 +387,16 @@ function Teachers(props) {
 
               </thead>
               <tbody>
-                {allTeachers.map((i, index) => 
+                {allTeachers.map((i, index) =>
                   <tr>
+                    <td>{index + 1}</td>
                     <td>{i.name}</td>
                     <td>{i.subject}</td>
                     <td><Link to={whatsappLink} target="_blank"> {i.mobile}</Link></td>
                     <td >{i.salary}</td>
-                    <td > <Button onClick={(e)=>editTeacher(i._id)}><i class="fa-solid fa-pen-to-square"></i></Button></td>
+                    <td > <Button onClick={(e) => showTeacher(i._id)}><i class="fa-solid fa-pen-to-square"></i></Button></td>
+                    {/* <td><Link to={`/admin/teachers/edit/${i._id}`}><Button ><i class="fa-solid fa-pen-to-square"></i></Button></Link></td> */}
+
                     <td><Link to={`/admin/teachers/payslip/${i._id}`}><Button >Pay Slip</Button></Link></td>
                   </tr>
                 )}
@@ -559,166 +579,183 @@ function Teachers(props) {
 
 
       {/* modal form for editing staff */}
+      {teacher ? (
+        <Modal show={edit} onHide={handleEditClose}>
+          <Modal.Header>
+            <Modal.Title>Edit Staff</Modal.Title>
+          </Modal.Header>
 
-      <Modal show={edit} onHide={handleEditClose}>
-        <Modal.Header>
-          <Modal.Title>Edit Staff</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <div className='text-center'>
-            <img src={editImagePreview ? editImagePreview : "https://i.postimg.cc/wv8r88nd/female-student-graduation-avatar-profile-vector-12055265.jpg"} style={{ borderRadius: '50%', height: '100px', width: '100px' }} alt="profile_pic" />
+          <Modal.Body>
+            <div className='text-center'>
+              <img src={editImagePreview ? editImagePreview : "https://i.postimg.cc/wv8r88nd/female-student-graduation-avatar-profile-vector-12055265.jpg"} style={{ borderRadius: '50%', height: '100px', width: '100px' }} alt="profile_pic" />
 
-          </div>
-          <Form>
-            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-              <Form.Label>Name</Form.Label>
-              <Form.Control
-                onChange={(e) => editData(e)}
-                name="user_name"
-                type="text"
-                placeholder="Enter Name"
-                autoFocus
-                required
-              />
-            </Form.Group>
+            </div>
             <Form>
-              {!editNameValid &&
+              <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+                <Form.Label>Name</Form.Label>
+                <Form.Control
+                  onChange={(e) => editData(e)}
+                  name="user_name"
+                  type="text"
+                  autoFocus
+                  required
+                  value={teacher.name}
+                  
+                />
+              </Form.Group>
+              <Form>
+                {!editNameValid &&
+                  <div>
+                    <p className='text-danger'>Includes Letters only</p>
+                  </div>}
+
+                <Form>
+                  <Form.Group as={Row} controlId="formHorizontalGender">
+                    <Form.Label as="legend" column sm={2}>
+                      Gender
+                    </Form.Label>
+
+                    <Col sm={10}>
+                      <Form.Check
+                        type="radio"
+                        label="Male"
+                        name="gender"
+                        id="male"
+                        value="male"
+                        onChange={(e) => editData(e)}
+                        checked={teacher.gender === 'male'}
+                      />
+                      <Form.Check
+
+                        type="radio"
+                        label="Female"
+                        name="gender"
+                        id="female"
+                        value="female"
+                        onChange={(e) => editData(e)}
+                        checked={teacher.gender === 'female'}
+
+
+                      />
+                    </Col>
+                  </Form.Group>
+                </Form>
+
+              </Form>
+
+              <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+                <Form.Label>Mobile</Form.Label>
+                <Form.Control
+                  onChange={(e) => editData(e)}
+                  name="mobile"
+                  type="text"
+                  placeholder="Enter Number"
+                  autoFocus
+                  required=""
+                  value={teacher.mobile}
+                />
+              </Form.Group>
+              {!editMobileValid &&
+                <div>
+                  <p className='text-danger'>Includes Numbers only (10-12 Numbers)</p>
+                </div>}
+
+              <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+                <Form.Label>Subject</Form.Label>
+                <Form.Control
+                  onChange={(e) => editData(e)}
+                  name="subject"
+                  type="text"
+                  placeholder="Enter Subject"
+                  autoFocus
+                  required
+                  value={teacher.subject}
+
+                />
+              </Form.Group>
+              {!editSubjectValid &&
                 <div>
                   <p className='text-danger'>Includes Letters only</p>
                 </div>}
+              <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+                <Form.Label>Salary</Form.Label>
+                <Form.Control
+                  onChange={(e) => editData(e)}
+                  name="salary"
+                  type="text"
+                  placeholder="Enter Salary"
+                  autoFocus
+                  required
+                  value={teacher.salary}
 
-              <Form>
-                <Form.Group as={Row} controlId="formHorizontalGender">
-                  <Form.Label as="legend" column sm={2}>
-                    Gender
-                  </Form.Label>
+                />
+              </Form.Group>
+              {!editSalaryValid &&
+                <div>
+                  <p className='text-danger'>Includes Numbers only</p>
+                </div>}
+              <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+                <Form.Label>Add Image</Form.Label>
+                <Form.Control
+                  onChange={(e) => insertEditImage(e)}
+                  type="file"
+                  autoFocus
+                  required
+                />
+              </Form.Group>
+              <hr />
+              <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+                <Form.Label>Email</Form.Label>
+                <Form.Control
+                  onChange={(e) => editData(e)}
+                  name="email"
+                  type="email"
+                  placeholder="Enter Email"
+                  autoFocus
+                  required
+                  value={teacher.email}
 
-                  <Col sm={10}>
-                    <Form.Check
-                      type="radio"
-                      label="Male"
-                      name="gender"
-                      id="male"
-                      value="male"
-                      onChange={(e) => editData(e)}
-                    />
-                    <Form.Check
+                />
+              </Form.Group>
+              {!editEmailValid &&
+                <div>
+                  <p className='text-danger'>Invalid format for email id</p>
+                </div>}
 
-                      type="radio"
-                      label="Female"
-                      name="gender"
-                      id="female"
-                      value="female"
-                      onChange={(e) => editData(e)}
+              <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+                <Form.Label>Password</Form.Label>
+                <Form.Control
+                  onChange={(e) => editData(e)}
+                  name="password"
+                  type="text"
+                  placeholder="Enter Password"
+                  autoFocus
+                  required
+                  value={teacher.password}
 
-
-                    />
-                  </Col>
-                </Form.Group>
-              </Form>
+                />
+              </Form.Group>
+              {!editPasswordValid &&
+                <div>
+                  <p className='text-danger'>Invalid format for Password</p>
+                </div>}
 
             </Form>
+          </Modal.Body>
+          <Modal.Footer className='px-3 pb-3' >
+            <Button variant="danger" onClick={handleEditClose}>
+              Close
+            </Button>
+            <Button variant="primary" onClick={handleEditClose}>
+              Save Changes
+            </Button>
+          </Modal.Footer>
 
-            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-              <Form.Label>Mobile</Form.Label>
-              <Form.Control
-                onChange={(e) => editData(e)}
-                name="mobile"
-                type="text"
-                placeholder="Enter Number"
-                autoFocus
-                required=""
-              />
-            </Form.Group>
-            {!editMobileValid &&
-              <div>
-                <p className='text-danger'>Includes Numbers only (10-12 Numbers)</p>
-              </div>}
 
-            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-              <Form.Label>Subject</Form.Label>
-              <Form.Control
-                onChange={(e) => editData(e)}
-                name="subject"
-                type="text"
-                placeholder="Enter Subject"
-                autoFocus
-                required
-              />
-            </Form.Group>
-            {!editSubjectValid &&
-              <div>
-                <p className='text-danger'>Includes Letters only</p>
-              </div>}
-            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-              <Form.Label>Salary</Form.Label>
-              <Form.Control
-                onChange={(e) => editData(e)}
-                name="salary"
-                type="text"
-                placeholder="Enter Salary"
-                autoFocus
-                required
-              />
-            </Form.Group>
-            {!editSalaryValid &&
-              <div>
-                <p className='text-danger'>Includes Numbers only</p>
-              </div>}
-            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-              <Form.Label>Add Image</Form.Label>
-              <Form.Control
-                onChange={(e) => insertEditImage(e)}
-                type="file"
-                autoFocus
-                required
-              />
-            </Form.Group>
-            <hr />
-            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-              <Form.Label>Email</Form.Label>
-              <Form.Control
-                onChange={(e) => editData(e)}
-                name="email"
-                type="email"
-                placeholder="Enter Email"
-                autoFocus
-                required
-              />
-            </Form.Group>
-            {!editEmailValid &&
-              <div>
-                <p className='text-danger'>Invalid format for email id</p>
-              </div>}
 
-            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-              <Form.Label>Password</Form.Label>
-              <Form.Control
-                onChange={(e) => editData(e)}
-                name="password"
-                type="text"
-                placeholder="Enter Password"
-                autoFocus
-                required
-              />
-            </Form.Group>
-            {!editPasswordValid &&
-              <div>
-                <p className='text-danger'>Invalid format for Password</p>
-              </div>}
-
-          </Form>
-        </Modal.Body>
-        <Modal.Footer className='px-3 pb-3' >
-          <Button variant="danger" onClick={handleEditClose}>
-            Close
-          </Button>
-          <Button variant="primary" onClick={handleEditClose}>
-            Save Changes
-          </Button>
-        </Modal.Footer>
-      </Modal>
-
+        </Modal>
+      ) :<h1>Teacher Not Found</h1>
+      }
 
     </div>
   )
