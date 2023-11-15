@@ -16,8 +16,11 @@
 
 */
 
+import AddNewClasses from "views/AddNewClasses";
 import AdminViewAll_progressCard from "views/AdminViewAll_progressCard";
+import AllClasses from "views/AllClasses";
 import Dashboard from "views/Dashboard.js";
+import EditClass from "views/EditClass";
 import EditTeacher from "views/EditTeacher";
 import Payslip from "views/Payslip";
 import ProgressCardForAdmin from "views/ProgressCard";
@@ -36,7 +39,7 @@ var routes = [
   {
     path: "/dashboard",
     name: "Dashboard",
-   
+
     icon: "tim-icons icon-chart-pie-36",
     component: <Dashboard />,
     layout: "/admin",
@@ -44,7 +47,7 @@ var routes = [
   {
     path: "/students",
     name: "Students",
-   
+
     icon: "tim-icons icon-single-02",
     component: <Students />,
     layout: "/admin",
@@ -52,15 +55,37 @@ var routes = [
   {
     path: "/teachers",
     name: "Teachers",
-   
+
     icon: "tim-icons icon-single-02",
     component: <Teachers />,
     layout: "/admin",
   },
   {
+    path: "/all-classes",
+    name: "All Classes",
+
+    icon: "tim-icons icon-single-02",
+    component: <AllClasses />,
+    layout: "/admin",
+  },
+  {
+    path: "/all-classes/add-new-class",
+    name: "Add Class",
+    icon: "tim-icons icon-single-02",
+    component: <AddNewClasses />,
+    layout: "/admin",
+  },
+  {
+    path: "/all-classes/edit-class",
+    name: "Add Class",
+    icon: "tim-icons icon-single-02",
+    component: <EditClass />,
+    layout: "/admin",
+  },
+  {
     path: "/progress-card",
     name: "Progress Card",
-   
+
     icon: "tim-icons icon-single-02",
     component: <ProgressCardForAdmin />,
     layout: "/admin",
@@ -68,39 +93,39 @@ var routes = [
   {
     path: "/teachers/payslip/:id",
     name: "Pay Slip",
-   
+
     icon: "tim-icons icon-single-02",
-    component: <Payslip/>,
+    component: <Payslip />,
     layout: "/admin",
   },
   {
     path: "/teachers/edit/:id",
     name: "Pay Slip",
-   
+
     icon: "tim-icons icon-single-02",
-    component: <EditTeacher/>,
+    component: <EditTeacher />,
     layout: "/admin",
   },
   {
     path: "/teachers/attendance",
     name: "Teacher Attendance",
-   
+
     icon: "tim-icons icon-single-02",
-    component: <TeacherAttendance/>,
+    component: <TeacherAttendance />,
     layout: "/admin",
   },
   {
     path: "/students/progress-card-all",
     name: "Teacher Attendance",
-   
+
     icon: "tim-icons icon-single-02",
-    component: <AdminViewAll_progressCard/>,
+    component: <AdminViewAll_progressCard />,
     layout: "/admin",
   },
   {
     path: "/dashboard",
     name: "Teachers",
-   
+
     icon: "tim-icons icon-single-02",
     component: <Teacher_Dashboard />,
     layout: "/teacher",
@@ -108,21 +133,21 @@ var routes = [
   {
     path: "/student-details",
     name: "Student Details",
-   
+
     component: <StudentDetails />,
     layout: "/teacher",
   },
   {
     path: "/progress-card",
     name: "Progress Card",
-   
+
     component: <ProgressCard />,
     layout: "/teacher",
   },
   {
     path: "/students-attendance",
     name: "Attendance",
-   
+
     component: <StudentsAttendance />,
     layout: "/teacher",
   },

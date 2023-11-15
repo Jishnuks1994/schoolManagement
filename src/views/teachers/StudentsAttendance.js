@@ -17,7 +17,7 @@ function StudentsAttendance() {
     const onChange = date => {
         setDate(date)
     }
-    console.log('date',date);
+    // console.log('date',date);
     const calanderShow=()=>{
         handleShow()
     }

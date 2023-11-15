@@ -8,6 +8,7 @@ import { teacherAddApi } from 'services/allApi';
 import { getAllTeachersApi } from 'services/allApi';
 import { showTeacherApi } from 'services/allApi';
 import BASE_URL from 'services/baseUrl';
+import Spinner from 'react-bootstrap/Spinner';
 
 
 function Teachers(props) {
@@ -205,7 +206,7 @@ function Teachers(props) {
 
   const insertEditImage = (e) => {
     // console.log(e.target);
-    
+
     setEditImage(e.target.files[0])
 
 
@@ -335,7 +336,7 @@ function Teachers(props) {
     const result = await getAllTeachersApi()
     if (result.status >= 200 && result.status < 300) {
       setAllTeachers(result.data)
-      
+
     }
 
   }
@@ -352,7 +353,7 @@ function Teachers(props) {
       // console.log(URL.createObjectURL(image));
       setEditImagePreview(URL.createObjectURL(editImage))
     }
-    
+
     //get all teachers
     getAllTeachers()
 
@@ -404,7 +405,9 @@ function Teachers(props) {
             </Table>
           ) :
             <h1 className='text-center p-5'>
-              No Employees Added yet !
+              <Spinner animation="border" role="status">
+                <span className="visually-hidden">Loading...</span>
+              </Spinner>
             </h1>
           }
 
@@ -600,7 +603,7 @@ function Teachers(props) {
                   autoFocus
                   required
                   value={teacher.name}
-                  
+
                 />
               </Form.Group>
               <Form>
@@ -754,7 +757,7 @@ function Teachers(props) {
 
 
         </Modal>
-      ) :<h1>Teacher Not Found</h1>
+      ) : <h1>Teacher Not Found</h1>
       }
 
     </div>

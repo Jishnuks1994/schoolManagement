@@ -64,7 +64,7 @@ function Sidebar(props) {
       {({ color }) => (
         <div className="sidebar" data={color}>
           <div className="sidebar-wrapper" ref={sidebarRef}>
-            
+
             <Nav>
               {/* {routes.map((prop, key) => {
                 if (prop.redirect) return null;
@@ -91,29 +91,35 @@ function Sidebar(props) {
               })} */}
 
               <li>
-              <NavLink 
-                    to={"/admin/dashboard"}
-                    onClick={props.toggleSidebar}>
-                      
-                      <i className="tim-icons icon-chart-pie-36" />
-                      Dashboard
-                      
-                    </NavLink>
-                    <NavLink 
-                    to={"/admin/students"}
-                    onClick={props.toggleSidebar}>
-                      <i className="tim-icons icon-chart-pie-36" />
-                      Students
-                    </NavLink>
-                    <NavLink 
-                    to={"/admin/teachers"}
-                    onClick={props.toggleSidebar}>
-                      <i className="tim-icons icon-chart-pie-36" />
-                      Teachers
-                    </NavLink>
-                    
+                <NavLink
+                  to={"/admin/dashboard"}
+                  onClick={props.toggleSidebar}>
+
+                  <i className="tim-icons icon-chart-pie-36" />
+                  Dashboard
+
+                </NavLink>
+                <NavLink
+                  to={"/admin/students"}
+                  onClick={props.toggleSidebar}>
+                  <i class="fa-solid fa-graduation-cap"></i>
+                  Students
+                </NavLink>
+                <NavLink
+                  to={"/admin/teachers"}
+                  onClick={props.toggleSidebar}>
+                  <i class="fa-solid fa-person-chalkboard"></i>
+                  Teachers
+                </NavLink>
+                <NavLink
+                  to={"/admin/all-classes"}
+                  onClick={props.toggleSidebar}>
+                  <i class="fa-solid fa-plus"></i>
+                  All Classes
+                </NavLink>
+
               </li>
-              
+
             </Nav>
           </div>
         </div>

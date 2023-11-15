@@ -81,6 +81,25 @@ function Dashboard(props) {
                   
                 </CardBody>
               </Card>
+              
+            </NavLink>
+          </Col>
+          <Col lg="4">
+            <NavLink
+            href="/admin/all-classes">
+              <Card className="card-chart">
+                <CardHeader>
+                  <h1 >All Classes  </h1>
+                  <CardTitle tag="h3">
+                   
+                    350
+                  </CardTitle>
+                </CardHeader>
+                <CardBody>
+                  
+                </CardBody>
+              </Card>
+              
             </NavLink>
           </Col>
 

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Form, Button, Container } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
+import { teacherLoginApi } from 'services/allApi';
 import { loginApi } from 'services/allApi';
 import validator from "validator";
 
@@ -54,7 +55,18 @@ function AdminLogin() {
 
             }
             else if (userType === 'teacher') {
-                navigate('/teacher');
+                const body = { email, password }
+                const result = await teacherLoginApi(body)
+                if (result.status >= 200 && result.status < 300) {
+                    // console.log(result.data.name);
+                    localStorage.setItem('name',result.data.name)
+                    navigate('/teacher');
+                    
+                }
+                else {
+                    alert(result.response.data)
+                }
+                // navigate('/teacher');
             }
             else if (userType === 'student') {
                 navigate('/student');

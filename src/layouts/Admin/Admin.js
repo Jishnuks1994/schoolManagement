@@ -35,6 +35,8 @@ import ProgressCardForAdmin from "views/ProgressCard";
 import Payslip from "views/Payslip";
 import TeacherAttendance from "views/TeacherAttendance";
 import AdminViewAll_progressCard from "views/AdminViewAll_progressCard";
+import AddNewClasses from "views/AddNewClasses";
+import EditClass from "views/EditClass";
 
 var ps;
 
@@ -139,6 +141,14 @@ function Admin(props) {
                 <Route
                   path="/admin/teachers/attendance"
                   element={<TeacherAttendance></TeacherAttendance>}
+                />
+                 <Route
+                  path="/admin/all-classes/add-new-class"
+                  element={<AddNewClasses></AddNewClasses>}
+                />
+                <Route
+                  path="/admin/all-classes/edit-class"
+                  element={<EditClass></EditClass>}
                 />
                  <Route
                  path="*"
