@@ -1,18 +1,18 @@
-import React, { useEffect, useState } from 'react'
-import { Button, Col, Row } from 'react-bootstrap'
-import { Card, CardBody, CardHeader, CardTitle, Table } from 'reactstrap'
-import Form from 'react-bootstrap/Form';
-import Modal from 'react-bootstrap/Modal';
-import { Link, useNavigate } from 'react-router-dom';
-import { teacherAddApi } from 'services/allApi';
-import { getAllTeachersApi } from 'services/allApi';
-import { showTeacherApi } from 'services/allApi';
-import BASE_URL from 'services/baseUrl';
-import Spinner from 'react-bootstrap/Spinner';
-
+import React, { useEffect, useState } from "react";
+import { Button, Col, Row } from "react-bootstrap";
+import { Card, CardBody, CardHeader, CardTitle, Table } from "reactstrap";
+import Form from "react-bootstrap/Form";
+import Modal from "react-bootstrap/Modal";
+import { Link, useNavigate } from "react-router-dom";
+import { teacherAddApi } from "services/allApi";
+import { getAllTeachersApi } from "services/allApi";
+import { showTeacherApi } from "services/allApi";
+import BASE_URL from "services/baseUrl";
+import Spinner from "react-bootstrap/Spinner";
+import { editTeacherApi } from "services/allApi";
 
 function Teachers(props) {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const [show, setShow] = useState(false);
 
@@ -26,49 +26,43 @@ function Teachers(props) {
 
   const whatsappLink = `https://wa.me/${1234567890}`;
 
-
-
-
   const attendance = () => {
-    navigate('/admin/teachers/attendance')
-  }
+    navigate("/admin/teachers/attendance");
+  };
 
   //state to add individual teacher data
-  const [teacher, setTeacher] = useState({})
+  const [teacher, setTeacher] = useState({});
 
   const showTeacher = async (id) => {
-
     // console.log(id);
-    const result = await showTeacherApi(id)
+    const result = await showTeacherApi(id);
     // console.log(id);
     // console.log(result.data);
-    setTeacher(result.data)
+    setTeacher(result.data);
     // console.log(result.data);
-    setEditImagePreview(`${BASE_URL}/uploads/${result.data.image}`)
+    setEditImagePreview(`${BASE_URL}/uploads/${result.data.image}`);
     // console.log(editImagePreview);
-    handleEditShow()
-
-  }
+    handleEditShow();
+  };
 
   //----------------------------------------------------------------------------------------------------
   //add form validation and function
-  const [addImage, setAddImage] = useState("")
+  const [addImage, setAddImage] = useState("");
 
   const insertImage = (e) => {
     // console.log(e.target.files[0]);
-    setAddImage(e.target.files[0])
-
-  }
+    setAddImage(e.target.files[0]);
+  };
 
   // state to hold image preview url
-  const [imagePreview, setImagePreview] = useState("")
+  const [imagePreview, setImagePreview] = useState("");
 
-  const [nameValid, setNameValid] = useState(true)
-  const [mobileValid, setMobileValid] = useState(true)
-  const [subjectValid, setSubjectValid] = useState(true)
-  const [salaryValid, setSalaryValid] = useState(true)
-  const [emailValid, setEmailValid] = useState(true)
-  const [passwordValid, setPasswordValid] = useState(true)
+  const [nameValid, setNameValid] = useState(true);
+  const [mobileValid, setMobileValid] = useState(true);
+  const [subjectValid, setSubjectValid] = useState(true);
+  const [salaryValid, setSalaryValid] = useState(true);
+  const [emailValid, setEmailValid] = useState(true);
+  const [passwordValid, setPasswordValid] = useState(true);
 
   const [inputs, setInputs] = useState({
     user_name: "",
@@ -78,106 +72,98 @@ function Teachers(props) {
     gender: "",
     subject: "",
     salary: "",
-  })
-
-
+  });
 
   const setData = (e) => {
-    const { value, name } = e.target
+    const { value, name } = e.target;
     if (name == "user_name") {
       if (value.match(/^[a-zA-Z ]+$/)) {
-        setNameValid(true)
-        setInputs({ ...inputs, [name]: value })
-
-      }
-      else {
-        setNameValid(false)
+        setNameValid(true);
+        setInputs({ ...inputs, [name]: value });
+      } else {
+        setNameValid(false);
       }
     }
     if (name == "subject") {
       if (value.match(/^[a-zA-Z ]+$/)) {
-        setSubjectValid(true)
-        setInputs({ ...inputs, [name]: value })
-
-      }
-      else {
-        setSubjectValid(false)
+        setSubjectValid(true);
+        setInputs({ ...inputs, [name]: value });
+      } else {
+        setSubjectValid(false);
       }
     }
     if (name == "mobile") {
       if (value.match(/^[0-9]{10,12}$/)) {
-        setMobileValid(true)
-        setInputs({ ...inputs, [name]: value })
-      }
-      else {
-        setMobileValid(false)
+        setMobileValid(true);
+        setInputs({ ...inputs, [name]: value });
+      } else {
+        setMobileValid(false);
       }
     }
     if (name == "salary") {
       if (value.match(/^[0-9]+$/)) {
-        setSalaryValid(true)
-        setInputs({ ...inputs, [name]: value })
-      }
-      else {
-        setSalaryValid(false)
+        setSalaryValid(true);
+        setInputs({ ...inputs, [name]: value });
+      } else {
+        setSalaryValid(false);
       }
     }
     if (name == "password") {
       if (value.match(/^[a-zA-Z0-9!@#$%&*]+$/)) {
-        setPasswordValid(true)
-        setInputs({ ...inputs, [name]: value })
-      }
-      else {
-        setPasswordValid(false)
+        setPasswordValid(true);
+        setInputs({ ...inputs, [name]: value });
+      } else {
+        setPasswordValid(false);
       }
     }
     if (name == "email") {
-      if (value.match(/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/)) {
-        setEmailValid(true)
-        setInputs({ ...inputs, [name]: value })
-      }
-      else {
-        setEmailValid(false)
+      if (
+        value.match(
+          /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
+        )
+      ) {
+        setEmailValid(true);
+        setInputs({ ...inputs, [name]: value });
+      } else {
+        setEmailValid(false);
       }
     }
-    if (name == 'gender') {
-      setInputs({ ...inputs, [name]: value })
+    if (name == "gender") {
+      setInputs({ ...inputs, [name]: value });
     }
 
     // console.log(inputs);
-
-  }
-
-
+  };
 
   const teacherAdd = async (e) => {
-    e.preventDefault()
-    const { user_name, gender, salary, email, password, mobile, subject } = inputs
+    e.preventDefault();
+    const { user_name, gender, salary, email, password, mobile, subject } =
+      inputs;
     //header (the body data contain file type content)
     const headerConfig = {
-      "Content-Type": "multipart/form-data"
-    }
+      "Content-Type": "multipart/form-data",
+    };
 
     //body data as formData : reason:-(the body data contain file type content)
-    const data = new FormData()
+    const data = new FormData();
 
     //appending datas
-    data.append("name", user_name)
-    data.append("mobile", mobile)
-    data.append("subject", subject)
-    data.append("salary", salary)
-    data.append("gender", gender)
-    data.append("email", email)
-    data.append("password", password)
-    data.append("image", addImage)
+    data.append("name", user_name);
+    data.append("mobile", mobile);
+    data.append("subject", subject);
+    data.append("salary", salary);
+    data.append("gender", gender);
+    data.append("email", email);
+    data.append("password", password);
+    data.append("image", addImage);
 
     // console.log(user_name, gender, salary, email, password, mobile, addImage, subject);
     //api
-    const result = await teacherAddApi(data, headerConfig)
+    const result = await teacherAddApi(data, headerConfig);
 
     if (result.status >= 200 && result.status < 300) {
       //clear data
-      setAddImage("")
+      setAddImage("");
 
       setInputs({
         ...inputs,
@@ -187,188 +173,197 @@ function Teachers(props) {
         mobile: "",
         gender: "",
         subject: "",
-        salary: ""
-      })
+        salary: "",
+      });
       // console.log(result.data);
-      handleClose()
-      alert(`Teacher Added Successfully`)
-
-    }
-    else {
+      handleClose();
+      alert(`Teacher Added Successfully`);
+    } else {
       // alert(result.response)
       console.log(result);
     }
-  }
+  };
   //-----------------------------------------------------------------------------------------------
 
   //edit form validation and function
-  const [editImage, setEditImage] = useState("")
+  const [editImage, setEditImage] = useState("");
 
   const insertEditImage = (e) => {
     // console.log(e.target);
 
-    setEditImage(e.target.files[0])
-
-
-  }
+    setEditImage(e.target.files[0]);
+  };
 
   // state to hold image preview url
-  const [editImagePreview, setEditImagePreview] = useState("")
+  const [editImagePreview, setEditImagePreview] = useState("");
 
-  const [editNameValid, setEditNameValid] = useState(true)
-  const [editMobileValid, setEditMobileValid] = useState(true)
-  const [editSubjectValid, setEditSubjectValid] = useState(true)
-  const [editSalaryValid, setEditSalaryValid] = useState(true)
-  const [editEmailValid, setEditEmailValid] = useState(true)
-  const [editPasswordValid, setEditPasswordValid] = useState(true)
-
-  const [editInputs, setEditInputs] = useState({
-    user_name: "",
-    email: "",
-    password: "",
-    mobile: "",
-    gender: "",
-    subject: "",
-    salary: "",
-  })
-
-
+  const [editNameValid, setEditNameValid] = useState(true);
+  const [editMobileValid, setEditMobileValid] = useState(true);
+  const [editSubjectValid, setEditSubjectValid] = useState(true);
+  const [editSalaryValid, setEditSalaryValid] = useState(true);
+  const [editEmailValid, setEditEmailValid] = useState(true);
+  const [editPasswordValid, setEditPasswordValid] = useState(true);
 
   const editData = (e) => {
-    const { value, name } = e.target
+    const { value, name } = e.target;
+    const updatedTeacher = { ...teacher };
+
     if (name == "user_name") {
       if (value.match(/^[a-zA-Z ]+$/)) {
-        setEditNameValid(true)
-        setEditInputs({ ...editInputs, [name]: value })
-
-      }
-      else {
-        setEditNameValid(false)
+        setEditNameValid(true);
+        setTeacher({ ...setTeacher, [name]: value });
+      } else {
+        setEditNameValid(false);
       }
     }
     if (name == "subject") {
       if (value.match(/^[a-zA-Z ]+$/)) {
-        setEditSubjectValid(true)
-        setEditInputs({ ...editInputs, [name]: value })
-
-      }
-      else {
-        setEditSubjectValid(false)
+        setEditSubjectValid(true);
+        setTeacher({ ...setTeacher, [name]: value });
+      } else {
+        setEditSubjectValid(false);
       }
     }
     if (name == "mobile") {
       if (value.match(/^[0-9]{10,12}$/)) {
-        setEditMobileValid(true)
-        setEditInputs({ ...editInputs, [name]: value })
-      }
-      else {
-        setEditMobileValid(false)
+        setEditMobileValid(true);
+        setTeacher({ ...setTeacher, [name]: value });
+      } else {
+        setEditMobileValid(false);
       }
     }
     if (name == "salary") {
       if (value.match(/^[0-9]+$/)) {
-        setEditSalaryValid(true)
-        setEditInputs({ ...editInputs, [name]: value })
-      }
-      else {
-        setEditSalaryValid(false)
+        setEditSalaryValid(true);
+        setTeacher({ ...setTeacher, [name]: value });
+      } else {
+        setEditSalaryValid(false);
       }
     }
     if (name == "password") {
       if (value.match(/^[a-zA-Z0-9!@#$%&*]+$/)) {
-        setEditPasswordValid(true)
-        setEditInputs({ ...editInputs, [name]: value })
-      }
-      else {
-        setEditPasswordValid(false)
+        setEditPasswordValid(true);
+        setTeacher({ ...setTeacher, [name]: value });
+      } else {
+        setEditPasswordValid(false);
       }
     }
     if (name == "email") {
-      if (value.match(/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/)) {
-        setEditEmailValid(true)
-        setEditInputs({ ...editInputs, [name]: value })
-      }
-      else {
-        setEditEmailValid(false)
+      if (
+        value.match(
+          /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
+        )
+      ) {
+        setEditEmailValid(true);
+        setTeacher({ ...setTeacher, [name]: value });
+      } else {
+        setEditEmailValid(false);
       }
     }
-    if (name == 'gender') {
-      setEditInputs({ ...editInputs, [name]: value })
+    if (name == "gender") {
+      setTeacher({ ...setTeacher, [name]: value });
     }
 
-    console.log(editInputs);
-
-  }
-
-
+    console.log(setTeacher);
+  };
 
   const teacherEdit = async (e) => {
-    e.preventDefault()
-    const { user_name, gender, salary, email, password, mobile, addImage, subject } = inputs
+    e.preventDefault();
+    const { _id } = teacher;
+    const {
+      user_name,
+      gender,
+      salary,
+      email,
+      password,
+      mobile,
+      addImage,
+      subject,
+    } = teacher;
     //header (the body data contain file type content)
     const headerConfig = {
-      "Content-Type": "multipart/form-data"
-    }
+      "Content-Type": "multipart/form-data",
+    };
 
     //body data as formData : reason:-(the body data contain file type content)
-    const data = new FormData()
+    const data = new FormData();
 
     //appending datas
-    data.append("name", user_name)
-    data.append("mobile", mobile)
-    data.append("subject", subject)
-    data.append("salary", salary)
-    data.append("gender", gender)
-    data.append("email", email)
-    data.append("password", password)
-    data.append("image", editImage)
+    data.append("name", user_name);
+    data.append("mobile", mobile);
+    data.append("subject", subject);
+    data.append("salary", salary);
+    data.append("gender", gender);
+    data.append("email", email);
+    data.append("password", password);
+    data.append("image", editImage);
 
-
-
-  }
+    try {
+      const result = editTeacherApi(data, headerConfig);
+      if (result.status >= 200 && result.status < 300) {
+        return result.response; 
+      }
+    } catch (error) {
+      throw new Error(error.response?.data || error.message);
+    }
+    handleEditClose()
+  };
   //-----------------------------------------------------------------------------------------------
 
   //state to hold all teachers data
-  const [allTeachers, setAllTeachers] = useState([])
+  const [allTeachers, setAllTeachers] = useState([]);
   //function to get all teachers data
 
   const getAllTeachers = async () => {
-    const result = await getAllTeachersApi()
+    const result = await getAllTeachersApi();
     if (result.status >= 200 && result.status < 300) {
-      setAllTeachers(result.data)
+      const sortedTeachers = result.data.sort((a, b) => {
+        // Assuming 'name' is the property you want to sort by
+        const nameA = a.name.toUpperCase();
+        const nameB = b.name.toUpperCase();
 
+        if (nameA < nameB) {
+          return -1;
+        }
+        if (nameA > nameB) {
+          return 1;
+        }
+        return 0;
+      });
+      setAllTeachers(sortedTeachers);
     }
-
-  }
-
-
+  };
 
   useEffect(() => {
-
     if (addImage) {
       // console.log(URL.createObjectURL(image));
-      setImagePreview(URL.createObjectURL(addImage))
+      setImagePreview(URL.createObjectURL(addImage));
     }
     if (editImage) {
       // console.log(URL.createObjectURL(image));
-      setEditImagePreview(URL.createObjectURL(editImage))
+      setEditImagePreview(URL.createObjectURL(editImage));
     }
 
     //get all teachers
-    getAllTeachers()
-
-  }, [addImage, editImage])
+    getAllTeachers();
+  }, [addImage, editImage]);
 
   return (
     <div className="content">
+      <Row className="mt-3">
+        <Col className="mb-4">
+          <Button style={{ background: "green" }} onClick={attendance}>
+            Add Attendance
+          </Button>
+        </Col>
 
-      <Row className='mt-3'>
-        <Col className='mb-4'><Button style={{ background: 'green' }} onClick={attendance}>Add Attendance</Button></Col>
-
-        <Col className='mb-4 text-right'><Button color='primay' onClick={handleShow}>Add New Staff</Button></Col>
-
+        <Col className="mb-4 text-right">
+          <Button color="primay" onClick={handleShow}>
+            Add New Staff
+          </Button>
+        </Col>
       </Row>
-      <Card >
+      <Card>
         <CardHeader>
           <CardTitle tag="h4">Teachers Details</CardTitle>
         </CardHeader>
@@ -381,55 +376,70 @@ function Teachers(props) {
                   <th>Name</th>
                   <th>Subject</th>
                   <th> Mobile No </th>
-                  <th >Salary</th>
-                  <th >Edit</th>
-                  <th >salary Details</th>
+                  <th>Salary</th>
+                  <th>Edit</th>
+                  <th>salary Details</th>
                 </tr>
-
               </thead>
               <tbody>
-                {allTeachers.map((i, index) =>
+                {allTeachers.map((i, index) => (
                   <tr>
                     <td>{index + 1}</td>
                     <td>{i.name}</td>
                     <td>{i.subject}</td>
-                    <td><Link to={whatsappLink} target="_blank"> {i.mobile}</Link></td>
-                    <td >{i.salary}</td>
-                    <td > <Button onClick={(e) => showTeacher(i._id)}><i class="fa-solid fa-pen-to-square"></i></Button></td>
+                    <td>
+                      <Link to={whatsappLink} target="_blank">
+                        {" "}
+                        {i.mobile}
+                      </Link>
+                    </td>
+                    <td>{i.salary}</td>
+                    <td>
+                      {" "}
+                      <Button onClick={(e) => showTeacher(i._id)}>
+                        <i class="fa-solid fa-pen-to-square"></i>
+                      </Button>
+                    </td>
                     {/* <td><Link to={`/admin/teachers/edit/${i._id}`}><Button ><i class="fa-solid fa-pen-to-square"></i></Button></Link></td> */}
 
-                    <td><Link to={`/admin/teachers/payslip/${i._id}`}><Button >Pay Slip</Button></Link></td>
+                    <td>
+                      <Link to={`/admin/teachers/payslip/${i._id}`}>
+                        <Button>Pay Slip</Button>
+                      </Link>
+                    </td>
                   </tr>
-                )}
+                ))}
               </tbody>
             </Table>
-          ) :
-            <h1 className='text-center p-5'>
+          ) : (
+            <h1 className="text-center p-5">
               <Spinner animation="border" role="status">
                 <span className="visually-hidden">Loading...</span>
               </Spinner>
             </h1>
-          }
-
+          )}
         </CardBody>
       </Card>
 
-
       {/* modal form for adding staff */}
-
-
-
 
       <Modal show={show} onHide={handleClose}>
         <Modal.Header>
           <Modal.Title>Add Staff</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <div className='text-center'>
-            <img src={imagePreview ? imagePreview : "https://i.postimg.cc/wv8r88nd/female-student-graduation-avatar-profile-vector-12055265.jpg"} style={{ borderRadius: '50%', height: '100px', width: '100px' }} alt="profile_pic" />
-
+          <div className="text-center">
+            <img
+              src={
+                imagePreview
+                  ? imagePreview
+                  : "https://i.postimg.cc/wv8r88nd/female-student-graduation-avatar-profile-vector-12055265.jpg"
+              }
+              style={{ borderRadius: "50%", height: "100px", width: "100px" }}
+              alt="profile_pic"
+            />
           </div>
-          <Form >
+          <Form>
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
               <Form.Label>Name</Form.Label>
               <Form.Control
@@ -442,10 +452,11 @@ function Teachers(props) {
               />
             </Form.Group>
             <Form>
-              {!nameValid &&
+              {!nameValid && (
                 <div>
-                  <p className='text-danger'>Includes Letters only</p>
-                </div>}
+                  <p className="text-danger">Includes Letters only</p>
+                </div>
+              )}
 
               <Form>
                 <Form.Group as={Row} controlId="formHorizontalGender">
@@ -463,20 +474,16 @@ function Teachers(props) {
                       onChange={(e) => setData(e)}
                     />
                     <Form.Check
-
                       type="radio"
                       label="Female"
                       name="gender"
                       id="female"
                       value="female"
                       onChange={(e) => setData(e)}
-
-
                     />
                   </Col>
                 </Form.Group>
               </Form>
-
             </Form>
 
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
@@ -490,10 +497,13 @@ function Teachers(props) {
                 required=""
               />
             </Form.Group>
-            {!mobileValid &&
+            {!mobileValid && (
               <div>
-                <p className='text-danger'>Includes Numbers only (10-12 Numbers)</p>
-              </div>}
+                <p className="text-danger">
+                  Includes Numbers only (10-12 Numbers)
+                </p>
+              </div>
+            )}
 
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
               <Form.Label>Subject</Form.Label>
@@ -506,10 +516,11 @@ function Teachers(props) {
                 required
               />
             </Form.Group>
-            {!subjectValid &&
+            {!subjectValid && (
               <div>
-                <p className='text-danger'>Includes Letters only</p>
-              </div>}
+                <p className="text-danger">Includes Letters only</p>
+              </div>
+            )}
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
               <Form.Label>Salary</Form.Label>
               <Form.Control
@@ -521,10 +532,11 @@ function Teachers(props) {
                 required
               />
             </Form.Group>
-            {!salaryValid &&
+            {!salaryValid && (
               <div>
-                <p className='text-danger'>Includes Numbers only</p>
-              </div>}
+                <p className="text-danger">Includes Numbers only</p>
+              </div>
+            )}
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
               <Form.Label>Add Image</Form.Label>
               <Form.Control
@@ -545,10 +557,11 @@ function Teachers(props) {
                 required
               />
             </Form.Group>
-            {!emailValid &&
+            {!emailValid && (
               <div>
-                <p className='text-danger'>Invalid format for email id</p>
-              </div>}
+                <p className="text-danger">Invalid format for email id</p>
+              </div>
+            )}
 
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
               <Form.Label>Password</Form.Label>
@@ -561,14 +574,14 @@ function Teachers(props) {
                 required
               />
             </Form.Group>
-            {!passwordValid &&
+            {!passwordValid && (
               <div>
-                <p className='text-danger'>Invalid format for Password</p>
-              </div>}
-
+                <p className="text-danger">Invalid format for Password</p>
+              </div>
+            )}
           </Form>
         </Modal.Body>
-        <Modal.Footer className='px-3 pb-3' >
+        <Modal.Footer className="px-3 pb-3">
           <Button variant="danger" onClick={handleClose}>
             Close
           </Button>
@@ -578,9 +591,6 @@ function Teachers(props) {
         </Modal.Footer>
       </Modal>
 
-
-
-
       {/* modal form for editing staff */}
       {teacher ? (
         <Modal show={edit} onHide={handleEditClose}>
@@ -589,12 +599,22 @@ function Teachers(props) {
           </Modal.Header>
 
           <Modal.Body>
-            <div className='text-center'>
-              <img src={editImagePreview ? editImagePreview : "https://i.postimg.cc/wv8r88nd/female-student-graduation-avatar-profile-vector-12055265.jpg"} style={{ borderRadius: '50%', height: '100px', width: '100px' }} alt="profile_pic" />
-
+            <div className="text-center">
+              <img
+                src={
+                  editImagePreview
+                    ? editImagePreview
+                    : "https://i.postimg.cc/wv8r88nd/female-student-graduation-avatar-profile-vector-12055265.jpg"
+                }
+                style={{ borderRadius: "50%", height: "100px", width: "100px" }}
+                alt="profile_pic"
+              />
             </div>
             <Form>
-              <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+              <Form.Group
+                className="mb-3"
+                controlId="exampleForm.ControlInput1"
+              >
                 <Form.Label>Name</Form.Label>
                 <Form.Control
                   onChange={(e) => editData(e)}
@@ -603,14 +623,14 @@ function Teachers(props) {
                   autoFocus
                   required
                   value={teacher.name}
-
                 />
               </Form.Group>
               <Form>
-                {!editNameValid &&
+                {!editNameValid && (
                   <div>
-                    <p className='text-danger'>Includes Letters only</p>
-                  </div>}
+                    <p className="text-danger">Includes Letters only</p>
+                  </div>
+                )}
 
                 <Form>
                   <Form.Group as={Row} controlId="formHorizontalGender">
@@ -626,27 +646,26 @@ function Teachers(props) {
                         id="male"
                         value="male"
                         onChange={(e) => editData(e)}
-                        checked={teacher.gender === 'male'}
+                        checked={teacher.gender === "male"}
                       />
                       <Form.Check
-
                         type="radio"
                         label="Female"
                         name="gender"
                         id="female"
                         value="female"
                         onChange={(e) => editData(e)}
-                        checked={teacher.gender === 'female'}
-
-
+                        checked={teacher.gender === "female"}
                       />
                     </Col>
                   </Form.Group>
                 </Form>
-
               </Form>
 
-              <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+              <Form.Group
+                className="mb-3"
+                controlId="exampleForm.ControlInput1"
+              >
                 <Form.Label>Mobile</Form.Label>
                 <Form.Control
                   onChange={(e) => editData(e)}
@@ -658,12 +677,18 @@ function Teachers(props) {
                   value={teacher.mobile}
                 />
               </Form.Group>
-              {!editMobileValid &&
+              {!editMobileValid && (
                 <div>
-                  <p className='text-danger'>Includes Numbers only (10-12 Numbers)</p>
-                </div>}
+                  <p className="text-danger">
+                    Includes Numbers only (10-12 Numbers)
+                  </p>
+                </div>
+              )}
 
-              <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+              <Form.Group
+                className="mb-3"
+                controlId="exampleForm.ControlInput1"
+              >
                 <Form.Label>Subject</Form.Label>
                 <Form.Control
                   onChange={(e) => editData(e)}
@@ -673,14 +698,17 @@ function Teachers(props) {
                   autoFocus
                   required
                   value={teacher.subject}
-
                 />
               </Form.Group>
-              {!editSubjectValid &&
+              {!editSubjectValid && (
                 <div>
-                  <p className='text-danger'>Includes Letters only</p>
-                </div>}
-              <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+                  <p className="text-danger">Includes Letters only</p>
+                </div>
+              )}
+              <Form.Group
+                className="mb-3"
+                controlId="exampleForm.ControlInput1"
+              >
                 <Form.Label>Salary</Form.Label>
                 <Form.Control
                   onChange={(e) => editData(e)}
@@ -690,14 +718,17 @@ function Teachers(props) {
                   autoFocus
                   required
                   value={teacher.salary}
-
                 />
               </Form.Group>
-              {!editSalaryValid &&
+              {!editSalaryValid && (
                 <div>
-                  <p className='text-danger'>Includes Numbers only</p>
-                </div>}
-              <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+                  <p className="text-danger">Includes Numbers only</p>
+                </div>
+              )}
+              <Form.Group
+                className="mb-3"
+                controlId="exampleForm.ControlInput1"
+              >
                 <Form.Label>Add Image</Form.Label>
                 <Form.Control
                   onChange={(e) => insertEditImage(e)}
@@ -707,7 +738,10 @@ function Teachers(props) {
                 />
               </Form.Group>
               <hr />
-              <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+              <Form.Group
+                className="mb-3"
+                controlId="exampleForm.ControlInput1"
+              >
                 <Form.Label>Email</Form.Label>
                 <Form.Control
                   onChange={(e) => editData(e)}
@@ -717,15 +751,18 @@ function Teachers(props) {
                   autoFocus
                   required
                   value={teacher.email}
-
                 />
               </Form.Group>
-              {!editEmailValid &&
+              {!editEmailValid && (
                 <div>
-                  <p className='text-danger'>Invalid format for email id</p>
-                </div>}
+                  <p className="text-danger">Invalid format for email id</p>
+                </div>
+              )}
 
-              <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+              <Form.Group
+                className="mb-3"
+                controlId="exampleForm.ControlInput1"
+              >
                 <Form.Label>Password</Form.Label>
                 <Form.Control
                   onChange={(e) => editData(e)}
@@ -735,33 +772,29 @@ function Teachers(props) {
                   autoFocus
                   required
                   value={teacher.password}
-
                 />
               </Form.Group>
-              {!editPasswordValid &&
+              {!editPasswordValid && (
                 <div>
-                  <p className='text-danger'>Invalid format for Password</p>
-                </div>}
-
+                  <p className="text-danger">Invalid format for Password</p>
+                </div>
+              )}
             </Form>
           </Modal.Body>
-          <Modal.Footer className='px-3 pb-3' >
+          <Modal.Footer className="px-3 pb-3">
             <Button variant="danger" onClick={handleEditClose}>
               Close
             </Button>
-            <Button variant="primary" onClick={handleEditClose}>
+            <Button variant="primary" onClick={teacherEdit}>
               Save Changes
             </Button>
           </Modal.Footer>
-
-
-
         </Modal>
-      ) : <h1>Teacher Not Found</h1>
-      }
-
+      ) : (
+        <h1>Teacher Not Found</h1>
+      )}
     </div>
-  )
+  );
 }
 
-export default Teachers
+export default Teachers;

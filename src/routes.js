@@ -76,7 +76,7 @@ var routes = [
     layout: "/admin",
   },
   {
-    path: "/all-classes/edit-class",
+    path: "/all-classes/edit-class/:id",
     name: "Add Class",
     icon: "tim-icons icon-single-02",
     component: <EditClass />,
