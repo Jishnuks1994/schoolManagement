@@ -24,20 +24,20 @@ import { Container } from "reactstrap";
 function Footer() {
   return (
     <footer className="footer">
-      <Container fluid >
-        
+      <Container fluid>
         <div className=" text-center">
-         <div>
+          <div>
             © {new Date().getFullYear()} made with{" "}
             <i className="tim-icons icon-heart-2" /> by{" "}
-            <a style={{color:'blue'}}
+            <a
+              style={{ color: "blue" }}
               href="https://ictglobaltech.com/"
               target="_blank"
             >
               ICT Global Tech
             </a>{" "}
             for a better web.
-         </div>
+          </div>
         </div>
       </Container>
     </footer>

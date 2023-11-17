@@ -28,7 +28,6 @@ import Sidebar from "components/Sidebar/Sidebar.js";
 
 import routes from "routes.js";
 
-
 import { BackgroundColorContext } from "contexts/BackgroundColorContext";
 import Png from "views/Png";
 import ProgressCardForAdmin from "views/ProgressCard";
@@ -109,30 +108,29 @@ function Admin(props) {
       {({ color, changeColor }) => (
         <React.Fragment>
           <div className="wrapper">
-            <Sidebar
-              routes={routes}
-              toggleSidebar={toggleSidebar}
-            />
+            <Sidebar routes={routes} toggleSidebar={toggleSidebar} />
             <div className="main-panel" ref={mainPanelRef} data={color}>
               <AdminNavbar
                 brandText={getBrandText(location.pathname)}
                 toggleSidebar={toggleSidebar}
                 sidebarOpened={sidebarOpened}
               />
-              
+
               <Routes>
                 {getRoutes(routes)}
                 <Route
                   path="/"
                   element={<Navigate to="/admin/dashboard" replace />}
                 />
-                 <Route
+                <Route
                   path="/admin/progress-card"
                   element={<ProgressCardForAdmin></ProgressCardForAdmin>}
                 />
                 <Route
                   path="/admin/students/progress-card-all"
-                  element={<AdminViewAll_progressCard></AdminViewAll_progressCard>}
+                  element={
+                    <AdminViewAll_progressCard></AdminViewAll_progressCard>
+                  }
                 />
                 <Route
                   path="/admin/teachers/payslip"
@@ -142,7 +140,7 @@ function Admin(props) {
                   path="/admin/teachers/attendance"
                   element={<TeacherAttendance></TeacherAttendance>}
                 />
-                 <Route
+                <Route
                   path="/admin/all-classes/add-new-class"
                   element={<AddNewClasses></AddNewClasses>}
                 />
@@ -150,14 +148,9 @@ function Admin(props) {
                   path="/admin/all-classes/edit-class"
                   element={<EditClass></EditClass>}
                 />
-                 <Route
-                 path="*"
-                 element={<Png></Png>}>
-                 
-                 </Route>
-                
+                <Route path="*" element={<Png></Png>}></Route>
               </Routes>
-             
+
               {
                 // we don't want the Footer to be rendered on map page
                 location.pathname === "/admin/maps" ? null : <Footer fluid />

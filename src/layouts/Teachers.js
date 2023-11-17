@@ -7,7 +7,6 @@ import { Route, Routes, Navigate, useLocation } from "react-router-dom";
 
 import routes from "routes.js";
 
-
 import { BackgroundColorContext } from "contexts/BackgroundColorContext";
 import Footer from "components/Footer/Footer";
 import AdminNavbar from "components/Navbars/AdminNavbar";
@@ -17,7 +16,6 @@ import StudentDetails from "views/teachers/StudentDetails";
 import ProgressCard from "views/teachers/ProgressCard";
 import StudentsAttendance from "views/teachers/StudentsAttendance";
 import ProgressCardAll from "views/teachers/ProgressCardAll";
-
 
 var ps;
 
@@ -60,49 +58,43 @@ function Teacher(props) {
     <BackgroundColorContext.Consumer>
       {({ color, changeColor }) => (
         <React.Fragment>
-          
-            <div data={color}>
-              <Row>
-                  <AdminNavbar
-                    brandText={getBrandText(location.pathname)}
-                    toggleSidebar={toggleSidebar}
-                    sidebarOpened={sidebarOpened}
-                  />
-              </Row>
-              <Col className="mt-5 col-12">
-                  <Routes>
-                    {getroutes(routes)}
-                    <Route
-                      path="/"
-                      element={<Navigate to="/teacher/dashboard" replace />}
-                    />
-                    <Route
-                    path="/student-details"
-                    element={<StudentDetails></StudentDetails>}
-                    ></Route>   
-                    <Route
-                    path="/progress-card"
-                    element={<ProgressCard></ProgressCard>}
-                    ></Route> 
-                    <Route
-                    path="/progress-card-all"
-                    element={<ProgressCardAll></ProgressCardAll>}
-                    ></Route> 
-                    <Route
-                    path="/students-attendance"
-                    element={<StudentsAttendance></StudentsAttendance>}
-                    ></Route> 
-                    <Route
-                path="*"
-                element={<Png></Png>}
+          <div data={color}>
+            <Row>
+              <AdminNavbar
+                brandText={getBrandText(location.pathname)}
+                toggleSidebar={toggleSidebar}
+                sidebarOpened={sidebarOpened}
               />
-                  </Routes>
-              </Col>
-              {
-                location.pathname === "/teacher/maps" ? null : <Footer fluid />
-              }
-            </div>
-         
+            </Row>
+            <Col className="mt-5 col-12">
+              <Routes>
+                {getroutes(routes)}
+                <Route
+                  path="/"
+                  element={<Navigate to="/teacher/dashboard" replace />}
+                />
+                <Route
+                  path="/student-details"
+                  element={<StudentDetails></StudentDetails>}
+                ></Route>
+                <Route
+                  path="/progress-card"
+                  element={<ProgressCard></ProgressCard>}
+                ></Route>
+                <Route
+                  path="/progress-card-all"
+                  element={<ProgressCardAll></ProgressCardAll>}
+                ></Route>
+                <Route
+                  path="/students-attendance"
+                  element={<StudentsAttendance></StudentsAttendance>}
+                ></Route>
+                <Route path="*" element={<Png></Png>} />
+              </Routes>
+            </Col>
+            {location.pathname === "/teacher/maps" ? null : <Footer fluid />}
+          </div>
+
           {/* <FixedPlugin bgColor={color} handleBgClick={changeColor} /> */}
         </React.Fragment>
       )}
@@ -111,7 +103,3 @@ function Teacher(props) {
 }
 
 export default Teacher;
-
-
-
-

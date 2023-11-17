@@ -211,7 +211,9 @@ function Teachers(props) {
     if (name == "user_name") {
       if (value.match(/^[a-zA-Z ]+$/)) {
         setEditNameValid(true);
-        setTeacher({ ...setTeacher, [name]: value });
+        // setTeacher({ ...teacher, [name]: value });
+        updatedTeacher[name] = value;
+        setTeacher(updatedTeacher);
       } else {
         setEditNameValid(false);
       }
@@ -264,12 +266,12 @@ function Teachers(props) {
       setTeacher({ ...setTeacher, [name]: value });
     }
 
-    console.log(setTeacher);
+    console.log(teacher);
   };
 
   const teacherEdit = async (e) => {
     e.preventDefault();
-    const { _id } = teacher;
+    const { _id } = teacher._id;
     const {
       user_name,
       gender,
@@ -299,14 +301,14 @@ function Teachers(props) {
     data.append("image", editImage);
 
     try {
-      const result = editTeacherApi(data, headerConfig);
+      const result = editTeacherApi(_id, data, headerConfig);
       if (result.status >= 200 && result.status < 300) {
-        return result.response; 
+        return result.response;
       }
     } catch (error) {
       throw new Error(error.response?.data || error.message);
     }
-    handleEditClose()
+    handleEditClose();
   };
   //-----------------------------------------------------------------------------------------------
 

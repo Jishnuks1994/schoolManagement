@@ -20039,3 +20039,8 @@ select.form-control option {
 }
 
 /*# sourceMappingURL=black-dashboard-react.css.map */
+
+.hov:hover{
+  transform: scale(1.1);
+  transition: .3;
+}

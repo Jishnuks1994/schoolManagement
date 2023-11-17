@@ -17,10 +17,8 @@
 */
 import React from "react";
 
-
 // reactstrap components
 import {
-
   Card,
   CardHeader,
   CardBody,
@@ -39,72 +37,49 @@ import {
 } from "variables/charts.js";
 
 function Dashboard(props) {
-
   return (
     <>
       <div className="content">
-
         <Row>
           <Col lg="4">
             <NavLink href="/admin/students">
               <Card className="card-chart">
                 <CardHeader>
                   <Row className=" me-auto">
-                    <Col><h1 >Students</h1></Col>
-  
+                    <Col>
+                      <h1>Students</h1>
+                    </Col>
                   </Row>
-                  
-                  <CardTitle tag="h3">
-                     763,215
-                  </CardTitle>
-                </CardHeader>
-                <CardBody>
-                  
-                  
-                </CardBody>
-                
-              </Card>
-            </NavLink>
-          </Col>
-          <Col lg="4">
-            <NavLink
-            href="/admin/teachers">
-              <Card className="card-chart">
-                <CardHeader>
-                  <h1 >Teachers</h1>
-                  <CardTitle tag="h3">
-                   
-                    350
-                  </CardTitle>
-                </CardHeader>
-                <CardBody>
-                  
-                </CardBody>
-              </Card>
-              
-            </NavLink>
-          </Col>
-          <Col lg="4">
-            <NavLink
-            href="/admin/all-classes">
-              <Card className="card-chart">
-                <CardHeader>
-                  <h1 >All Classes  </h1>
-                  <CardTitle tag="h3">
-                   
-                    350
-                  </CardTitle>
-                </CardHeader>
-                <CardBody>
-                  
-                </CardBody>
-              </Card>
-              
-            </NavLink>
-          </Col>
 
+                  <CardTitle tag="h3">763,215</CardTitle>
+                </CardHeader>
+                <CardBody></CardBody>
+              </Card>
+            </NavLink>
+          </Col>
+          <Col lg="4">
+            <NavLink href="/admin/teachers">
+              <Card className="card-chart">
+                <CardHeader>
+                  <h1>Teachers</h1>
+                  <CardTitle tag="h3">350</CardTitle>
+                </CardHeader>
+                <CardBody></CardBody>
+              </Card>
+            </NavLink>
+          </Col>
+          <Col lg="4">
+            <NavLink href="/admin/all-classes">
+              <Card className="card-chart">
+                <CardHeader>
+                  <h1>All Classes </h1>
+                  <CardTitle tag="h3">350</CardTitle>
+                </CardHeader>
+                <CardBody></CardBody>
+              </Card>
+            </NavLink>
+          </Col>
         </Row>
-
       </div>
     </>
   );

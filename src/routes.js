@@ -33,8 +33,6 @@ import StudentDetails from "views/teachers/StudentDetails";
 import StudentsAttendance from "views/teachers/StudentsAttendance";
 import Teacher_Dashboard from "views/teachers/Teacher_Dashboard";
 
-
-
 var routes = [
   {
     path: "/dashboard",

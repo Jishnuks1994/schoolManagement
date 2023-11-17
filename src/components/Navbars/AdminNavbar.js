@@ -98,7 +98,6 @@ function AdminNavbar(props) {
           </NavbarToggler>
           <Collapse navbar isOpen={collapseOpen}>
             <Nav className="ml-auto" navbar>
-              
               {/* <UncontrolledDropdown nav>
                 <DropdownToggle
                   caret
@@ -169,7 +168,7 @@ function AdminNavbar(props) {
           </Collapse>
         </Container>
       </Navbar>
-      
+
       {/* <Modal
         modalClassName="modal-search"
         isOpen={modalSearch}

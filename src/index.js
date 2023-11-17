@@ -19,8 +19,6 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
 
-
-
 import "assets/scss/black-dashboard-react.scss";
 import "assets/demo/demo.css";
 import "assets/css/nucleo-icons.css";
@@ -38,17 +36,14 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <ThemeContextWrapper>
     {/* <BackgroundColorWrapper> */}
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<AdminLogin />} />
-          <Route path="/admin/*" element={<AdminLayout />} />
-          <Route path="/teacher/*" element={<Teacher />} />
-          <Route
-            path="*"
-            element={<Png></Png>}
-          />
-        </Routes>
-      </BrowserRouter>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<AdminLogin />} />
+        <Route path="/admin/*" element={<AdminLayout />} />
+        <Route path="/teacher/*" element={<Teacher />} />
+        <Route path="*" element={<Png></Png>} />
+      </Routes>
+    </BrowserRouter>
     {/* </BackgroundColorWrapper> */}
   </ThemeContextWrapper>
 );
