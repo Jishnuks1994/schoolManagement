@@ -69,3 +69,13 @@ export const getAllClassesApi = async () => {
 export const editClassApi = async (body) => {
   return await commonStructure("PUT", `${BASE_URL}/admin/edit-class`, body);
 };
+
+//edit class
+export const deleteClassApi = async (_id) => {
+  return await commonStructure("DELETE", `${BASE_URL}/admin/delete-class${_id}`, {});
+};
+
+//teacher attendance
+export const teacherAttendanceApi = async (body) => {
+  return await commonStructure("POST", `${BASE_URL}/admin/teacher-attendance`, body);
+};

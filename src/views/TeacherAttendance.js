@@ -6,6 +6,7 @@ import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import Button from "react-bootstrap/Button";
 import { getAllTeachersApi } from "services/allApi";
+import { teacherAttendanceApi } from "services/allApi";
 
 function TeacherAttendance() {
   const [show, setShow] = useState(false);
@@ -19,7 +20,6 @@ function TeacherAttendance() {
   const onChange = (date) => {
     setDate(date);
   };
-  // console.log('date',date);
   const calanderShow = () => {
     handleShow();
   };
@@ -28,7 +28,6 @@ function TeacherAttendance() {
     try {
       const teachersData = await getAllTeachersApi();
       setTeachers(teachersData.data);
-      //   console.log(teachersData.data);
     } catch (error) {
       console.error("Error fetching teachers:", error);
     }
@@ -39,26 +38,45 @@ function TeacherAttendance() {
     fetchTeachers();
   }, []);
 
-  const takeAttendance = () => {
-    console.log("Date:", date.toDateString());
-    console.log("Attendance Records:", attendanceRecords);
+  const takeAttendance = async () => {
+    const body = {
+      date,
+      attendanceRecords,
+    };
+    const result = await teacherAttendanceApi(body);
+    if (result.status >= 200 && result.status < 300) {
+      console.log(result);
+    }
+
     handleClose();
   };
 
   const handleAttendanceChange = (e) => {
     const { value, name } = e.target;
-    // const updatedRecords = attendanceRecords.map((record) => {
-    //  if(record){ if (record.name === teacher) {
-    //     return { ...record, attendance };
-    //   }
-    //   return record;}
-    //   else{
-    //     updatedRecords=[{teacher,attendance}]
-    //   }
-    // });
-    const attendance = { date: value };
 
-    // setAttendanceRecords({ ...attendanceRecords, [name]: value });
+    // Check if the attendance record for this teacher already exists in the state
+    const existingRecordIndex = attendanceRecords.findIndex(
+      (record) => record.teacherID === name
+    );
+
+    if (existingRecordIndex !== -1) {
+      // If the record exists, update it
+      const updatedRecords = [...attendanceRecords];
+      updatedRecords[existingRecordIndex] = {
+        ...updatedRecords[existingRecordIndex],
+        present: value,
+      };
+      setAttendanceRecords(updatedRecords);
+    } else {
+      // If the record doesn't exist, add a new record
+      setAttendanceRecords([
+        ...attendanceRecords,
+        {
+          teacherID: name,
+          present: value,
+        },
+      ]);
+    }
   };
 
   return (
@@ -93,14 +111,14 @@ function TeacherAttendance() {
                       <option
                         style={{ background: "#0bad09", fontSize: "11px" }}
                         className=" text-dark"
-                        value="Present"
+                        value="present"
                       >
                         Present
                       </option>
                       <option
                         style={{ background: "#f2463a" }}
                         className=" text-dark"
-                        value="Absent"
+                        value="absent"
                       >
                         Absent
                       </option>
@@ -137,7 +155,7 @@ function TeacherAttendance() {
             Close
           </Button>
           <Button variant="primary" onClick={handleClose}>
-            Take Attendance
+            Set Date
           </Button>
         </Modal.Footer>
       </Modal>

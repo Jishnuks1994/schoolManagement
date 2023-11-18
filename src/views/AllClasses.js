@@ -3,7 +3,9 @@ import { useState } from "react";
 import { Button, Col, Container } from "react-bootstrap";
 import Table from "react-bootstrap/Table";
 import { Link, useNavigate } from "react-router-dom";
+import { deleteClassApi } from "services/allApi";
 import { getAllClassesApi } from "services/allApi";
+
 
 function AllClasses() {
   const navigate = useNavigate();
@@ -31,6 +33,20 @@ function AllClasses() {
       console.error("Error fetching classes:", error);
     }
   };
+
+  const deleteClass=async(_id)=>{
+    try{
+      const result = await deleteClassApi(_id);
+      if (result.success) {
+        alert(result.message)
+      }
+    }
+    catch{
+      console.error("Error deleting class:");
+
+    }
+
+  }
 
   useState(() => {
     getAllClasses();
@@ -67,7 +83,8 @@ function AllClasses() {
                   <td></td>
                   <td>
                     <Link to={`/admin/all-classes/edit-class/${classItem._id}`}>
-                      <Button>
+                      <Button
+                      onClick={(e)=>deleteClass(classItem._id)}>
                         <i className="fa-regular fa-pen-to-square"></i>
                       </Button>
                     </Link>
