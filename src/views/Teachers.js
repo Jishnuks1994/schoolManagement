@@ -29,6 +29,9 @@ function Teachers(props) {
   const attendance = () => {
     navigate("/admin/teachers/attendance");
   };
+  const viewAttendance = () => {
+    navigate("/admin/teachers/view-attendance");
+  };
 
   //state to add individual teacher data
   const [teacher, setTeacher] = useState({});
@@ -354,9 +357,11 @@ function Teachers(props) {
     <div className="content">
       <Row className="mt-3">
         <Col className="mb-4">
-          <Button style={{ background: "green" }} onClick={attendance}>
-            Add Attendance
-          </Button>
+          <Button onClick={attendance}>Take Attendance</Button>
+        </Col>
+
+        <Col className="mb-4">
+          <Button onClick={viewAttendance}>View Attendance</Button>
         </Col>
 
         <Col className="mb-4 text-right">

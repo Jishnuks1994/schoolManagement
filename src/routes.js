@@ -32,6 +32,7 @@ import ProgressCardAll from "views/teachers/ProgressCardAll";
 import StudentDetails from "views/teachers/StudentDetails";
 import StudentsAttendance from "views/teachers/StudentsAttendance";
 import Teacher_Dashboard from "views/teachers/Teacher_Dashboard";
+import ViewTeacherAttendance from "views/ViewTeacherAttendance";
 
 var routes = [
   {
@@ -110,6 +111,14 @@ var routes = [
 
     icon: "tim-icons icon-single-02",
     component: <TeacherAttendance />,
+    layout: "/admin",
+  },
+  {
+    path: "/teachers/view-attendance",
+    name: "Teacher Attendance",
+
+    icon: "tim-icons icon-single-02",
+    component: <ViewTeacherAttendance />,
     layout: "/admin",
   },
   {

@@ -7,6 +7,7 @@ import "react-calendar/dist/Calendar.css";
 import Button from "react-bootstrap/Button";
 import { getAllTeachersApi } from "services/allApi";
 import { teacherAttendanceApi } from "services/allApi";
+import { useNavigate } from "react-router";
 
 function TeacherAttendance() {
   const [show, setShow] = useState(false);
@@ -16,9 +17,12 @@ function TeacherAttendance() {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
+  const navigate = useNavigate();
+
   const [date, setDate] = useState(new Date());
   const onChange = (date) => {
     setDate(date);
+    // console.log(date);
   };
   const calanderShow = () => {
     handleShow();
@@ -40,14 +44,14 @@ function TeacherAttendance() {
 
   const takeAttendance = async () => {
     const body = {
-      date,
+      date: date.toLocaleDateString(),
       attendanceRecords,
     };
     const result = await teacherAttendanceApi(body);
     if (result.status >= 200 && result.status < 300) {
-      console.log(result);
+      alert(result.data);
+      navigate(-1);
     }
-
     handleClose();
   };
 
@@ -72,7 +76,7 @@ function TeacherAttendance() {
       setAttendanceRecords([
         ...attendanceRecords,
         {
-          teacherID: name,
+          teacher_id: name,
           present: value,
         },
       ]);
@@ -99,7 +103,18 @@ function TeacherAttendance() {
               {teachers.map((teacher, index) => (
                 <tr key={index}>
                   <td>{index + 1}</td>
-                  <td>{teacher.name}</td>
+                  <td>
+                    {/* {teacher.name} */}
+                    <input
+                      type="text"
+                      value={teacher.name}
+                      style={{
+                        border: "none",
+                        background: "none",
+                        outline: "none",
+                      }}
+                    />
+                  </td>
                   <td className="text-center">
                     <Form.Select
                       name={teacher._id}
@@ -111,14 +126,14 @@ function TeacherAttendance() {
                       <option
                         style={{ background: "#0bad09", fontSize: "11px" }}
                         className=" text-dark"
-                        value="present"
+                        value="Present"
                       >
                         Present
                       </option>
                       <option
                         style={{ background: "#f2463a" }}
                         className=" text-dark"
-                        value="absent"
+                        value="Absent"
                       >
                         Absent
                       </option>

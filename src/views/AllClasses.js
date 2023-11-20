@@ -6,7 +6,6 @@ import { Link, useNavigate } from "react-router-dom";
 import { deleteClassApi } from "services/allApi";
 import { getAllClassesApi } from "services/allApi";
 
-
 function AllClasses() {
   const navigate = useNavigate();
   const [classesData, setClassesData] = useState([]);
@@ -34,19 +33,16 @@ function AllClasses() {
     }
   };
 
-  const deleteClass=async(_id)=>{
-    try{
+  const deleteClass = async (_id) => {
+    try {
       const result = await deleteClassApi(_id);
       if (result.success) {
-        alert(result.message)
+        alert(result.message);
       }
-    }
-    catch{
+    } catch {
       console.error("Error deleting class:");
-
     }
-
-  }
+  };
 
   useState(() => {
     getAllClasses();
@@ -83,8 +79,7 @@ function AllClasses() {
                   <td></td>
                   <td>
                     <Link to={`/admin/all-classes/edit-class/${classItem._id}`}>
-                      <Button
-                      onClick={(e)=>deleteClass(classItem._id)}>
+                      <Button onClick={(e) => deleteClass(classItem._id)}>
                         <i className="fa-regular fa-pen-to-square"></i>
                       </Button>
                     </Link>

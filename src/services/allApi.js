@@ -79,3 +79,8 @@ export const deleteClassApi = async (_id) => {
 export const teacherAttendanceApi = async (body) => {
   return await commonStructure("POST", `${BASE_URL}/admin/teacher-attendance`, body);
 };
+
+//get all teacher attendance
+export const getAllTeacherAttendanceApi = async (body) => {
+  return await commonStructure("POST", `${BASE_URL}/admin/get-all-teacher-attendance`, body);
+};
